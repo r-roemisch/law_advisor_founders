@@ -1,0 +1,3 @@
+# Latest text plus Legal Status, not full version history
+
+For each Source the Corpus keeps only the latest consolidated text, plus a Legal Status (pending proposal / in force / applicable from <date> / repealed) and a Change Record for every detected update. Full point-in-time versioning ("what did the law say on date X") was rejected because founders need to know what applies to them now and from when, not legal history, and versioning would multiply storage, re-embedding and retrieval complexity. Keeping only the bare latest text was also rejected: it cannot tell "in force" apart from "applicable" (the AI Act's staged dates, moved again by Reg. 2026/1744), and it cannot show what changed.

@@ -1,0 +1,74 @@
+# Retrieval Strategies (see CONTEXT.md, ADR 0005, ADR 0007).
+#
+# Not legal advice: the Founder Legal Guide provides general legal information only.
+#
+# A strategy composes building blocks registered by name in the backend:
+#   chunker           how Sources are cut into passages            (structure | fixed | semantic)
+#   embedding         OpenRouter embedding model id
+#   backend           where passages are indexed                   (pgvector | qdrant | chroma)
+#   search            how the index is searched                    (hybrid | vector)
+#   query_transforms  optional steps that rewrite the question     (bilingual_expansion | multi_query)
+#   reranker          optional step that reorders results          (llm)
+#
+# To add a strategy: add an entry here. To add a new kind of building block:
+# write one class in the backend, register it by name, and reference it here.
+# `enabled: false` keeps a strategy out of update runs and the UI picker.
+
+default: S1
+
+defaults:
+  chunker: {name: structure}
+  embedding: openai/text-embedding-3-small
+  backend: pgvector
+  search: hybrid
+  query_transforms: [{name: bilingual_expansion}]
+  reranker: null
+  top_k: 8
+  # Rank official law and guidance above practical pages (Q7); 1.0 everywhere switches it off.
+  tier_weights: {1: 1.0, 2: 0.95, 3: 0.75}
+
+strategies:
+  S1:
+    description: Structure-aware chunks, text-embedding-3-small, pgvector, hybrid search (default)
+
+  S2:
+    description: Fixed-size chunks (tests chunking against S1)
+    chunker: {name: fixed, chunk_size: 1200, chunk_overlap: 200}
+
+  S3:
+    description: Vector-only search (tests hybrid against S1)
+    search: vector
+
+  S4:
+    description: Qdrant backend (tests backend against S1)
+    backend: qdrant
+
+  S5:
+    description: Chroma backend, vector-only (tests backend against S3)
+    backend: chroma
+    search: vector
+
+  S1-mistral:
+    description: Mistral embed (tests embedding model against S1)
+    embedding: mistralai/mistral-embed-2312
+
+  S1-large:
+    description: OpenAI text-embedding-3-large (tests embedding model against S1)
+    embedding: openai/text-embedding-3-large
+
+  S4-oai-large:
+    description: OpenAI text-embedding-3-large on Qdrant (tests embedding model against S4)
+    embedding: openai/text-embedding-3-large
+    backend: qdrant
+
+  S6:
+    description: Semantic chunking (tests chunking against S1 and S2)
+    chunker: {name: semantic}
+
+  S7:
+    description: Multi-query rewriting on top of bilingual expansion (tests query transformation against S1)
+    query_transforms: [{name: bilingual_expansion}, {name: multi_query, variants: 3}]
+
+  S8:
+    description: LLM reranking of the top 24 hits (tests reranking against S1)
+    reranker: {name: llm, candidates: 24}

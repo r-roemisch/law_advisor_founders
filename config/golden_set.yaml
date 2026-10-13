@@ -1,0 +1,963 @@
+# Golden Set: test questions with the passages each must retrieve (CONTEXT.md, ADR 0005).
+#
+# Not legal advice: the Founder Legal Guide provides general legal information only.
+#
+# Drafted by the judge model from real provisions sampled per Coverage Map cell. REVIEW EACH ITEM:
+#   - Is the question realistic for a founder, and answerable from the expected passages?
+#   - Is the reference answer correct and grounded in them?
+#   - Would other passages also answer it correctly? ADD THEM to `expected` (source_id + label, anchor
+#     if known, e.g. {source_id: eu-gdpr, label: "Art. 33 – ...", anchor: art_33}). A question counts as
+#     found if ANY expected passage is retrieved; a too-narrow list scores correct retrieval as a miss.
+#   Then set `status: reviewed` (or `rejected`, with a reason in `notes`). Headline results use reviewed
+#   items only.
+items:
+- id: data_protection-eu-1
+  question: Kann ein Nutzer seine Daten aus unserer App mitnehmen, um zu einem anderen Anbieter zu wechseln?
+  language: de
+  kind: answerable
+  legal_area: data_protection
+  jurisdiction: EU
+  expected:
+  - source_id: eu-gdpr
+    label: Art. 20 – Right to data portability
+    anchor: art_20
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Ja, wenn es um personenbezogene Daten geht, die der Nutzer uns bereitgestellt hat, wir sie automatisiert
+    verarbeiten und die Verarbeitung auf seiner Einwilligung oder einem Vertrag beruht. Er kann diese Daten in einem
+    strukturierten, gängigen und maschinenlesbaren Format erhalten und sie an einen anderen Anbieter übertragen;
+    eine direkte Übertragung muss möglich sein, wenn sie technisch machbar ist.
+  status: draft
+  notes: ''
+- id: data_protection-eu-2
+  question: Unser Cloud-Dienstleister meldet uns, dass in seinen Systemen Kundendaten abgeflossen sein könnten.
+    Was muss er uns bei der Aufklärung und Meldung des Vorfalls liefern?
+  language: de
+  kind: answerable
+  legal_area: data_protection
+  jurisdiction: EU
+  expected:
+  - source_id: eu-edpb-controller-processor
+    label: p. 39
+    anchor: page=39
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Als Auftragsverarbeiter muss der Dienstleister uns ohne unangemessene Verzögerung informieren,
+    wenn er eine Verletzung des Schutzes personenbezogener Daten in seinen oder den Systemen eines Unterauftragnehmers
+    entdeckt. Er muss uns außerdem dabei unterstützen, die für eine Meldung an die Aufsichtsbehörde nötigen Informationen
+    zusammenzutragen und die Meldepflichten gegenüber Behörde und betroffenen Personen zu erfüllen.
+  status: draft
+  notes: ''
+- id: ai_regulation-eu-1
+  question: When do the EU rules on labelling AI-generated content start applying?
+  language: en
+  kind: answerable
+  legal_area: ai_regulation
+  jurisdiction: EU
+  expected:
+  - source_id: eu-ai-content-code-of-practice
+    label: Code of Practice on Transparency of AI-generated Content (marking and labelling)
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: The AI Act’s transparency obligations apply from 2 August 2026. They cover marking and detection
+    of AI-generated content, as well as labelling deepfakes and certain AI-generated publications.
+  status: draft
+  notes: ''
+- id: ai_regulation-eu-2
+  question: Our startup generates images for customers. Do we have to follow the EU’s AI-content code of practice,
+    or is it just guidance?
+  language: en
+  kind: answerable
+  legal_area: ai_regulation
+  jurisdiction: EU
+  expected:
+  - source_id: eu-ai-content-code-of-practice
+    label: Code of Practice on Transparency of AI-generated Content (marking and labelling)
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Following the code of practice is voluntary, but the AI Act’s transparency requirements are
+    legal obligations. The Commission and the AI Board have confirmed that the code is an adequate voluntary way
+    to demonstrate compliance with those requirements.
+  status: draft
+  notes: ''
+- id: platform_law-eu-1
+  question: Our social app is used by teenagers, and we're not a micro or small business. What does the EU recommend
+    we do with account privacy and content feeds?
+  language: en
+  kind: answerable
+  legal_area: platform_law
+  jurisdiction: EU
+  expected:
+  - source_id: eu-com-dsa-minors-guidelines
+    label: Commission Guidelines on the protection of minors online (DSA Art. 28)
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: The Commission’s guidelines recommend making minors’ accounts private by default, so people
+    they are not connected with cannot see their personal information or content. They also recommend adjusting
+    feeds to reduce exposure to harmful content and repetitive content rabbit holes, including by giving more weight
+    to children’s explicit choices than to behavioural signals. The guidelines apply to platforms accessible to
+    minors, except micro and small enterprises.
+  status: draft
+  notes: ''
+- id: platform_law-eu-2
+  question: If a user has a dispute with our platform, can we try to settle it online without going to court?
+  language: en
+  kind: answerable
+  legal_area: platform_law
+  jurisdiction: EU
+  expected:
+  - source_id: eu-ecommerce-directive
+    label: Art. 17 – Out-of-court dispute settlement
+    anchor: art_17
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Yes. Member States must ensure their laws do not hamper the use of out-of-court dispute schemes
+    available under national law for disagreements between an online service provider and a user, including schemes
+    that use electronic means. The excerpt does not say that a particular scheme will be available for every dispute.
+  status: draft
+  notes: ''
+- id: company_formation-eu-1
+  question: Wir gründen ein KI-Startup mit acht Beschäftigten. Unser Jahresumsatz liegt bei 1,8 Millionen Euro,
+    die Bilanzsumme aber bei 3 Millionen Euro. Gelten wir trotzdem als Kleinstunternehmen?
+  language: de
+  kind: answerable
+  legal_area: company_formation
+  jurisdiction: EU
+  expected:
+  - source_id: eu-sme-recommendation
+    label: Art. 2 – Staff headcount and financial ceilings determining enterprise categories
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Ja, nach den genannten Zahlen erfüllt ihr die Größenkriterien für ein Kleinstunternehmen. Dafür
+    braucht ihr weniger als zehn Beschäftigte; außerdem muss der Jahresumsatz und/oder die Bilanzsumme höchstens
+    2 Millionen Euro betragen. Dass eure Bilanzsumme darüber liegt, schließt euch bei einem Umsatz von 1,8 Millionen
+    Euro nicht aus.
+  status: draft
+  notes: ''
+- id: company_formation-eu-2
+  question: 'Wenn wir nach der Gründung EU-Förderung suchen: Sollen neue EU-Programme bei der Frage, wer als KMU
+    zählt, dieselbe Definition verwenden?'
+  language: de
+  kind: answerable
+  legal_area: company_formation
+  jurisdiction: EU
+  expected:
+  - source_id: eu-sme-recommendation
+    label: Art. 8 – References
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Ja. Neue oder geänderte EU-Programme, die Begriffe wie „KMU“ verwenden, sollen auf die Definition
+    in der KMU-Empfehlung verweisen. Für bereits laufende Programme gibt es eine Übergangsregelung; bestehende verbindliche
+    Zusagen der Kommission bleiben unberührt.
+  status: draft
+  notes: ''
+- id: contracts-eu-1
+  question: Customers install our app themselves using our setup guide. If a mistake in the guide means the app
+    doesn't work properly, is that our responsibility?
+  language: en
+  kind: answerable
+  legal_area: contracts
+  jurisdiction: EU
+  expected:
+  - source_id: eu-digital-content-directive
+    label: Art. 9 – Incorrect integration of the digital content or digital service
+    anchor: art_9
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Yes, if the app was intended to be installed by the customer and the problem resulted from shortcomings
+    in your instructions, the problem is treated as a failure of the app to meet the contract requirements. The
+    same applies if your company installed it, or installation was done under your responsibility.
+  status: draft
+  notes: ''
+- id: contracts-eu-2
+  question: We're selling a financial service to consumers online. If someone receives the contract terms a few
+    days after signing, when does their no-reason cancellation window start?
+  language: en
+  kind: answerable
+  legal_area: contracts
+  jurisdiction: EU
+  expected:
+  - source_id: eu-consumer-rights-directive
+    label: Art. 16b – Right of withdrawal from distance contracts for financial services
+    anchor: art_16b
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: The window starts when the consumer receives the contract terms and required information, if
+    that is later than the day they signed. It normally lasts 14 calendar days, or 30 calendar days for a distance
+    contract relating to personal pension operations. The excerpt also lists financial services for which this withdrawal
+    right does not apply.
+  status: draft
+  notes: ''
+- id: intellectual_property-eu-1
+  question: A competitor has told the EU trade mark office that our startup’s brand shouldn’t be registered. Can
+    they do that, and will we get a chance to respond?
+  language: en
+  kind: answerable
+  legal_area: intellectual_property
+  jurisdiction: EU
+  expected:
+  - source_id: eu-trademark-regulation
+    label: Art. 45 – Observations by third parties
+    anchor: art_45
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Anyone may submit written observations explaining why a mark should not be registered on the
+    specified grounds, but doing so does not make them a party to the proceedings. The office must pass the observations
+    to your startup, and you may comment on them.
+  status: draft
+  notes: ''
+- id: intellectual_property-eu-2
+  question: We took legal action after someone leaked our confidential product plans. Can we ask the court to publicize
+    its decision without revealing the plans again?
+  language: en
+  kind: answerable
+  legal_area: intellectual_property
+  jurisdiction: EU
+  expected:
+  - source_id: eu-trade-secrets-directive
+    label: Art. 15 – Publication of judicial decisions
+    anchor: art_15
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: You can ask the court to order publication of all or part of its decision, at the infringer’s
+    expense. Any such measure must preserve the confidentiality of the trade secrets. The court will consider factors
+    including the value of the secret, the infringer’s conduct and the impact of the leak.
+  status: draft
+  notes: ''
+- id: employment-eu-1
+  question: Können wir für eine Mitarbeiterin, die normalerweise in Deutschland arbeitet, irisches Recht im Arbeitsvertrag
+    festlegen und damit deutsche Pflichtregeln umgehen?
+  language: de
+  kind: answerable
+  legal_area: employment
+  jurisdiction: EU
+  expected:
+  - source_id: eu-rome-i
+    label: Art. 8 – Individual employment contracts
+    anchor: art_8
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Ihr könnt für den Arbeitsvertrag grundsätzlich irisches Recht wählen. Die Mitarbeiterin darf
+    dadurch aber nicht den Schutz zwingender Vorschriften verlieren, die ohne diese Wahl gelten würden; bei gewöhnlicher
+    Arbeit in Deutschland ist das grundsätzlich deutsches Recht.
+  status: draft
+  notes: ''
+- id: employment-eu-2
+  question: Unser Mitarbeiter arbeitet normalerweise von Österreich aus und hilft drei Monate beim Team in Portugal.
+    Wir haben im Arbeitsvertrag kein Recht festgelegt – welches gilt?
+  language: de
+  kind: answerable
+  legal_area: employment
+  jurisdiction: EU
+  expected:
+  - source_id: eu-rome-i
+    label: Art. 8 – Individual employment contracts
+    anchor: art_8
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Ohne Rechtswahl gilt grundsätzlich das Recht des Landes, in dem oder von dem aus der Mitarbeiter
+    gewöhnlich arbeitet – hier also österreichisches Recht. Ein vorübergehender Einsatz in Portugal ändert den gewöhnlichen
+    Arbeitsort nicht.
+  status: draft
+  notes: ''
+- id: cybersecurity_product-eu-1
+  question: We're building a password manager for EU customers. Is it on the CRA's list of important digital products?
+  language: en
+  kind: answerable
+  legal_area: cybersecurity_product
+  jurisdiction: EU
+  expected:
+  - source_id: eu-cra
+    label: Annex III – IMPORTANT PRODUCTS WITH DIGITAL ELEMENTS
+    anchor: anx_III
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Yes. Password managers are listed as Class I important products with digital elements under
+    the CRA.
+  status: draft
+  notes: ''
+- id: cybersecurity_product-eu-2
+  question: The body reviewing our cybersecurity product has stopped operating. What happens to the files it was
+    handling?
+  language: en
+  kind: answerable
+  legal_area: cybersecurity_product
+  jurisdiction: EU
+  expected:
+  - source_id: eu-cra
+    label: Art. 45 – Changes to notifications
+    anchor: art_45
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: The Member State that notified the body must take steps to have its files processed by another
+    notified body or kept available for the responsible notifying and market surveillance authorities on request.
+  status: draft
+  notes: ''
+- id: data_protection-de-1
+  question: We use a third-party cloud AI tool to handle customer data for our own product. Do we need a data-processing
+    agreement with the provider?
+  language: en
+  kind: answerable
+  legal_area: data_protection
+  jurisdiction: DE
+  expected:
+  - source_id: de-dsk-oh-ai
+    label: p. 9
+    anchor: page=9
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: If the provider processes the data on your behalf for your purposes, it is often acting as a
+    processor, and you need a data-processing agreement with it. If you and the provider jointly determine why and
+    how the data is processed, you may instead be jointly responsible.
+  status: draft
+  notes: ''
+- id: data_protection-de-2
+  question: Can our cookie banner show an “Accept” button right away but make people scroll to find the option to
+    decline?
+  language: en
+  kind: answerable
+  legal_area: data_protection
+  jurisdiction: DE
+  expected:
+  - source_id: de-dsk-oh-digital-services
+    label: p. 35
+    anchor: page=35
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: No. An option to decline that appears only after scrolling is not an equally easy-to-notice
+    alternative when the option to accept is visible immediately. If you provide a decline button, its label must
+    also make clear that clicking it does not give consent.
+  status: draft
+  notes: ''
+- id: ai_regulation-de-1
+  question: Fällt unser Tool unter die KI-Verordnung, wenn es aus Nutzereingaben automatisch Empfehlungen erstellt?
+  language: de
+  kind: answerable
+  legal_area: ai_regulation
+  jurisdiction: DE
+  expected:
+  - source_id: de-bnetza-ai-faq
+    label: Was ist ein KI-System?
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Das kann der Fall sein. Die KI-Verordnung erfasst maschinengestützte Systeme, die mit einem
+    gewissen Grad an Autonomie aus Eingaben ableiten, wie sie beispielsweise Empfehlungen erstellen, die eine virtuelle
+    oder physische Umgebung beeinflussen können. Ob euer Tool darunter fällt, hängt davon ab, wie es tatsächlich
+    funktioniert.
+  status: draft
+  notes: ''
+- id: ai_regulation-de-2
+  question: Eine Nutzerin verlangt, dass wir ihre Daten aus unserer KI-Anwendung löschen. Reicht es, wenn wir ihre
+    Angaben künftig mit einem Ausgabefilter ausblenden?
+  language: de
+  kind: answerable
+  legal_area: ai_regulation
+  jurisdiction: DE
+  expected:
+  - source_id: de-dsk-oh-ai
+    label: p. 8
+    anchor: page=8
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: 'Ein nachgeschalteter Ausgabefilter stellt nicht generell eine Löschung dar: Die Daten könnten
+    für das KI-Modell weiterhin mit der Person verknüpfbar sein. Bei einer Löschung müsst ihr darauf achten, dass
+    ein Personenbezug nicht wiederhergestellt werden kann; wie das umzusetzen ist, hängt von der Anwendung ab.'
+  status: draft
+  notes: ''
+- id: platform_law-de-1
+  question: Wir betreiben eine Plattform und möchten Cookies ohne Einwilligung setzen, weil sie für unser Geschäftsmodell
+    wichtig sind. Reicht das?
+  language: de
+  kind: answerable
+  legal_area: platform_law
+  jurisdiction: DE
+  expected:
+  - source_id: de-dsk-oh-digital-services
+    label: p. 23
+    anchor: page=23
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Nein. Entscheidend ist, ob das Speichern oder Auslesen technisch erforderlich ist, um den von
+    den Nutzern gewünschten Dienst bereitzustellen; wirtschaftliche Notwendigkeit für das Geschäftsmodell reicht
+    nicht. Auch Zeitpunkt, Laufzeit, Inhalt und Zugriffsmöglichkeiten müssen auf das erforderliche Minimum begrenzt
+    sein.
+  status: draft
+  notes: ''
+- id: platform_law-de-2
+  question: Auf unserem Online-Marktplatz zeigen wir Produkte mit Preis und Kaufmöglichkeit. Welche Angaben sollten
+    Käufer schon beim Angebot sehen?
+  language: de
+  kind: answerable
+  legal_area: platform_law
+  jurisdiction: DE
+  expected:
+  - source_id: de-uwg
+    label: § 5b – Wesentliche Informationen
+    anchor: p-5b
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Wenn Verbraucher anhand des Angebots einen Kauf abschließen können, gehören insbesondere die
+    wesentlichen Produktmerkmale, die Identität und Anschrift des Anbieters sowie der Gesamtpreis zu den wesentlichen
+    Informationen. Ist der Gesamtpreis nicht vorab berechenbar, muss die Art der Preisberechnung angegeben werden;
+    mögliche zusätzliche Lieferkosten sind ebenfalls zu berücksichtigen.
+  status: draft
+  notes: ''
+- id: company_formation-de-1
+  question: Can our new GmbH appoint another company as its only managing director?
+  language: en
+  kind: answerable
+  legal_area: company_formation
+  jurisdiction: DE
+  expected:
+  - source_id: de-gmbhg
+    label: § 6 – Geschäftsführer
+    anchor: p-6
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: No. A GmbH must have at least one managing director, and each managing director must be a natural
+    person with full legal capacity. Another company cannot serve in that role.
+  status: draft
+  notes: ''
+- id: company_formation-de-2
+  question: We're setting up a GmbH and preparing customer emails and order forms. What company details do we need
+    to put on them?
+  language: en
+  kind: answerable
+  legal_area: company_formation
+  jurisdiction: DE
+  expected:
+  - source_id: de-gmbhg
+    label: § 35a – Angaben auf Geschäftsbriefen
+    anchor: p-35a
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Business correspondence addressed to a specific recipient must state the GmbH’s legal form and
+    registered seat, its registration court and commercial-register number, and the names of all managing directors,
+    with each person’s surname and at least one full first name. Order forms count as business correspondence and
+    must include these details even where an exception for routine communications in an existing business relationship
+    might otherwise apply. If you mention the company’s capital, you must also state its share capital and, if applicable,
+    the total unpaid cash contributions.
+  status: draft
+  notes: ''
+- id: contracts-de-1
+  question: Wir verkaufen unser SaaS-Abo an Privatkunden direkt über unsere Website. Brauchen wir dort einen Kündigungsbutton,
+    und wohin muss er führen?
+  language: de
+  kind: answerable
+  legal_area: contracts
+  jurisdiction: DE
+  expected:
+  - source_id: de-bgb
+    label: § 312k – Kündigung von Verbraucherverträgen im elektronischen Geschäftsverkehr
+    anchor: p-312k
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Ja, für ein kostenpflichtiges Abo, das Verbraucher über Ihre Website abschließen können, müssen
+    Sie eine Möglichkeit zur Kündigung über einen Button anbieten. Er muss gut lesbar und eindeutig beschriftet
+    sein, etwa mit „Verträge hier kündigen“, und unmittelbar zu einer Bestätigungsseite führen. Dort müssen Kunden
+    unter anderem den Vertrag bezeichnen und angeben können, wann er enden soll.
+  status: draft
+  notes: ''
+- id: contracts-de-2
+  question: Was gehört in das Widerrufsformular für unsere Kunden – müssen sie es auch unterschreiben, wenn sie
+    es per E-Mail schicken?
+  language: de
+  kind: answerable
+  legal_area: contracts
+  jurisdiction: DE
+  expected:
+  - source_id: de-egbgb
+    label: Anlage 2 – (zu Artikel 246a § 1 Absatz 2 Satz 1 Nummer 1 und § 2 Absatz 2 Nummer 2)Muster für das Widerrufsformular
+    anchor: anlage-2
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Das Muster sieht unter anderem Ihre Kontaktdaten, Angaben zum gekauften Produkt oder zur Dienstleistung,
+    das Bestell- beziehungsweise Empfangsdatum sowie Name und Anschrift des Kunden vor. Eine Unterschrift ist laut
+    Muster nur bei einer Mitteilung auf Papier vorgesehen.
+  status: draft
+  notes: ''
+- id: intellectual_property-de-1
+  question: Prüft das DPMA bei unserer Markenanmeldung, ob schon jemand einen ähnlichen Namen geschützt hat?
+  language: de
+  kind: answerable
+  legal_area: intellectual_property
+  jurisdiction: DE
+  expected:
+  - source_id: de-dpma-trademarks
+    label: Warnung vor Angeboten, Zahlungsaufforderungen und Rechnungen, die nicht vom DPMA stammen
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Nein. Das DPMA prüft im Anmeldeverfahren nicht, ob bereits identische oder ähnliche Marken eingetragen
+    sind. Inhaber älterer Marken können nach der Eintragung Ihrer Marke möglicherweise Widerspruch erheben.
+  status: draft
+  notes: ''
+- id: intellectual_property-de-2
+  question: Ein anderes Unternehmen hat unser Geschäftsgeheimnis ohne Erlaubnis genutzt und damit Geld verdient.
+    Können wir diesen Gewinn als Schadensersatz verlangen?
+  language: de
+  kind: answerable
+  legal_area: intellectual_property
+  jurisdiction: DE
+  expected:
+  - source_id: de-geschgehg
+    label: § 10 – Haftung des Rechtsverletzers
+    anchor: p-10
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Wenn das Unternehmen vorsätzlich oder fahrlässig gehandelt hat, muss es den dadurch entstandenen
+    Schaden ersetzen. Bei der Berechnung des Schadensersatzes kann auch der Gewinn berücksichtigt werden, den es
+    durch die Verletzung erzielt hat. Alternativ kann der Betrag zugrunde gelegt werden, den es für eine Erlaubnis
+    zur Nutzung angemessenerweise hätte zahlen müssen.
+  status: draft
+  notes: ''
+- id: employment-de-1
+  question: We’re hiring a freelance developer in Germany. Can we get an official decision on whether they count
+    as self-employed or an employee?
+  language: en
+  kind: answerable
+  legal_area: employment
+  jurisdiction: DE
+  expected:
+  - source_id: de-sgb-iv
+    label: § 7a – Feststellung des Erwerbsstatus
+    anchor: p-7a
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Yes. You or the developer can apply in writing or electronically to the German Pension Insurance
+    authority for a decision. It assesses all the circumstances of the working relationship, unless a relevant social
+    insurance body had already started a procedure to determine employment-based insurance obligations when the
+    application was made.
+  status: draft
+  notes: ''
+- id: employment-de-2
+  question: An employee sued us within three weeks of receiving their written dismissal, but has now raised a new
+    reason why it was invalid. Can they add that reason to the same case?
+  language: en
+  kind: answerable
+  legal_area: employment
+  jurisdiction: DE
+  expected:
+  - source_id: de-kschg
+    label: § 6 – Verlängerte Anrufungsfrist
+    anchor: p-6
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Yes. If the employee brought the claim within three weeks of receiving the written dismissal,
+    they may add reasons they did not originally raise up to the close of the first-instance oral hearing. The labour
+    court should inform them of this possibility.
+  status: draft
+  notes: ''
+- id: cybersecurity_product-de-1
+  question: Wir sind als besonders wichtiges Unternehmen eingestuft und verkaufen Cybersicherheitssoftware. Kann
+    das BSI von uns ein externes Sicherheits-Audit verlangen, und müssen wir dabei gefundene Schwachstellen offenlegen?
+  language: de
+  kind: answerable
+  legal_area: cybersecurity_product
+  jurisdiction: DE
+  expected:
+  - source_id: de-bsig
+    label: § 61 – Aufsichts- und Durchsetzungsmaßnahmen für besonders wichtige Einrichtungen
+    anchor: p-61
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Das Bundesamt kann einer besonders wichtigen Einrichtung anordnen, ihre Pflichten durch eine
+    unabhängige Stelle prüfen zu lassen. Hat es eine solche Prüfung angeordnet, kann es auch die Ergebnisse einschließlich
+    aufgedeckter Sicherheitsmängel und die zugrunde liegende Dokumentation verlangen. Bei Sicherheitsmängeln kann
+    es zudem einen geeigneten Plan zur Beseitigung verlangen.
+  status: draft
+  notes: ''
+- id: cybersecurity_product-de-2
+  question: Wir kaufen Security-Geräte bei einem anderen Hersteller und verkaufen sie unter unserer eigenen Marke.
+    Gelten wir bei Schäden dadurch selbst als Hersteller?
+  language: de
+  kind: answerable
+  legal_area: cybersecurity_product
+  jurisdiction: DE
+  expected:
+  - source_id: de-prodhaftg
+    label: § 4 – Hersteller
+    anchor: p-4
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Ja. Wer seinen Namen, seine Marke oder ein anderes unterscheidungskräftiges Kennzeichen auf
+    einem Produkt anbringt und sich damit als Hersteller ausgibt, gilt nach dem Produkthaftungsgesetz ebenfalls
+    als Hersteller. Das gilt auch dann, wenn ein anderes Unternehmen das Produkt gefertigt hat.
+  status: draft
+  notes: ''
+- id: fundraising-de-1
+  question: Wir halten zusammen 10 % an unserer GmbH und wollen über die nächste Finanzierungsrunde in einer Gesellschafterversammlung
+    sprechen. Können wir eine Versammlung verlangen?
+  language: de
+  kind: answerable
+  legal_area: fundraising
+  jurisdiction: DE
+  expected:
+  - source_id: de-gmbhg
+    label: § 50 – Minderheitsrechte
+    anchor: p-50
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Ja. Gesellschafter mit zusammen mindestens 10 % des Stammkapitals können unter Angabe von Zweck
+    und Gründen eine Gesellschafterversammlung verlangen. Wird dem Verlangen nicht entsprochen, können sie die Versammlung
+    selbst einberufen; ob die GmbH die Kosten trägt, entscheidet die Versammlung.
+  status: draft
+  notes: ''
+- id: fundraising-de-2
+  question: Vor einer Finanzierungsrunde möchten wir auf Ersatzforderungen der GmbH aus der Gründung verzichten.
+    Geht das auch, wenn wir das Geld brauchen, um offene Rechnungen zu bezahlen?
+  language: de
+  kind: answerable
+  legal_area: fundraising
+  jurisdiction: DE
+  expected:
+  - source_id: de-gmbhg
+    label: § 9b – Verzicht auf Ersatzansprüche
+    anchor: p-9b
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Soweit es um Ersatzansprüche nach § 9a GmbHG geht, ist ein Verzicht unwirksam, wenn das Geld
+    benötigt wird, um Gläubiger der GmbH zu befriedigen. Ausnahmen gelten, wenn die ersatzpflichtige Person zahlungsunfähig
+    ist und sich zur Abwendung eines Insolvenzverfahrens mit ihren Gläubigern vergleicht oder wenn die Ersatzpflicht
+    in einem Insolvenzplan geregelt wird.
+  status: draft
+  notes: ''
+- id: data_protection-us-1
+  question: Our EU startup sells a social media plug-in to US websites. A parents’ group sent us a list of sites
+    it says are aimed at kids. Do we need to investigate every site?
+  language: en
+  kind: answerable
+  legal_area: data_protection
+  jurisdiction: US
+  expected:
+  - source_id: us-ftc-coppa-faq
+    label: 2. I operate a social media plug-in. I receive a list of websites from a parents’ organization, advocacy
+      group or someone else, which says that these websites are using my plug-in and are child-directed. Does this
+      give me actual knowledge of the child-directed nature of these sites?
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: A list of purportedly child-directed sites alone is unlikely to give you actual knowledge, and
+    you have no duty to investigate based on the list alone. Screenshots or other concrete information could change
+    that. If you are uncertain, you may ordinarily rely on a specific affirmative statement from the site operator
+    that its content is not child-directed, but a standard clause in your terms of service is not enough.
+  status: draft
+  notes: ''
+- id: data_protection-us-2
+  question: We run a site for kids in the US. If we blur their faces before posting their photos, can we skip asking
+    their parents for permission?
+  language: en
+  kind: answerable
+  legal_area: data_protection
+  jurisdiction: US
+  expected:
+  - source_id: us-ftc-coppa-faq
+    label: 3. Do I have to get parental consent if first I blur images in the children’s photos so that you cannot
+      see any facial features when the pictures go live on my site?
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: You do not need to notify parents or obtain their consent if you blur the children’s facial
+    features before posting the photos. You must also remove other personal information in the photos, such as location
+    metadata, and ensure you are not using or disclosing identifiers collected from children in a way that violates
+    the rule.
+  status: draft
+  notes: ''
+- id: ai_regulation-us-1
+  question: We’re training an AI model for US customers on copyrighted books. Can we assume that’s fair use because
+    the model learns from them like a person would?
+  language: en
+  kind: answerable
+  legal_area: ai_regulation
+  jurisdiction: US
+  expected:
+  - source_id: us-copyright-act-core
+    label: § 106 – Exclusive rights in copyrighted works
+    anchor: s106
+  - source_id: us-copyright-office-ai-part3
+    label: p. 52
+    anchor: page=52
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: No. The U.S. Copyright Office says AI training is not inherently transformative just because
+    it resembles human learning, and that fair use does not excuse every copy made for learning. Copyright owners
+    have an exclusive right to reproduce their works, subject to exceptions including fair use; these excerpts do
+    not determine whether your particular training use qualifies.
+  status: draft
+  notes: ''
+- id: ai_regulation-us-2
+  question: Our AI product uses the general idea behind a competitor’s published guide, but not its wording. Does
+    US copyright protect the idea itself?
+  language: en
+  kind: answerable
+  legal_area: ai_regulation
+  jurisdiction: US
+  expected:
+  - source_id: us-copyright-act-core
+    label: '§ 102 – Subject matter of copyright: In general'
+    anchor: s102
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: No. US copyright can protect an original work of authorship, such as the guide’s written expression,
+    but it does not extend to an idea, concept, process, or method described in that work. The excerpt does not
+    establish whether your product copies any protected expression from the guide.
+  status: draft
+  notes: ''
+- id: platform_law-us-1
+  question: Our EU startup and a partner want to send one promotional email to US customers featuring both products.
+    Can we name just one of us as responsible for the email?
+  language: en
+  kind: answerable
+  legal_area: platform_law
+  jurisdiction: US
+  expected:
+  - source_id: us-ftc-can-spam-guide
+    label: Q. What if the email includes information from more than one company? Who is the “sender” responsible
+      for CAN-SPAM compliance?
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Yes. You can designate one marketer as the sender if it promotes its own product in the email,
+    is identified in the “from” line, and meets the email requirements, including a valid postal address and working
+    opt-out link. If it fails to meet those responsibilities, both marketers may be held liable as senders.
+  status: draft
+  notes: ''
+- id: platform_law-us-2
+  question: Could a US state attorney general sue our EU app over its subscription checkout?
+  language: en
+  kind: answerable
+  legal_area: platform_law
+  jurisdiction: US
+  expected:
+  - source_id: us-rosca
+    label: § 8405 – Enforcement by State attorneys general
+    anchor: s8405
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: A state attorney general can bring a federal-court action alleging a violation of the online-shopping
+    law covered by this excerpt, or a regulation under it, if the violation affects or may affect the state or its
+    residents. The attorney general can seek appropriate injunctive relief and generally must notify the FTC before
+    filing.
+  status: draft
+  notes: ''
+- id: intellectual_property-us-1
+  question: Our team uses AI to brainstorm blog topics and outlines, but writes the posts ourselves without copying
+    the AI's text. Does that hurt our chances of getting US copyright protection?
+  language: en
+  kind: answerable
+  legal_area: intellectual_property
+  jurisdiction: US
+  expected:
+  - source_id: us-copyright-office-ai-part2
+    label: p. 20
+    anchor: page=20
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Using AI to brainstorm or suggest an outline, without incorporating its output, should not affect
+    the copyrightability of the resulting human-authored work. The Copyright Office distinguishes AI that assists
+    human expression from AI that makes the expressive choices itself.
+  status: draft
+  notes: ''
+- id: intellectual_property-us-2
+  question: Can we use US copyright to stop a competitor from copying our app idea?
+  language: en
+  kind: answerable
+  legal_area: intellectual_property
+  jurisdiction: US
+  expected:
+  - source_id: us-copyright-act-core
+    label: '§ 102 – Subject matter of copyright: In general'
+    anchor: s102
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: US copyright does not protect an idea, process, system, or method of operation, even if you
+    describe it in writing. It can protect an original work of authorship fixed in a tangible form, such as your
+    own written description, but not the underlying app idea.
+  status: draft
+  notes: ''
+- id: company_formation-us-1
+  question: Does Delaware company law cover registered agents for a new corporation?
+  language: en
+  kind: answerable
+  legal_area: company_formation
+  jurisdiction: US
+  expected:
+  - source_id: us-de-dgcl
+    label: GENERAL CORPORATION LAW
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Yes. The Delaware General Corporation Law has a section on registered offices and registered
+    agents. This excerpt does not say what an incorporator must do to appoint one.
+  status: draft
+  notes: ''
+- id: company_formation-us-2
+  question: We already have an EU company but sell to US customers. Does Delaware law address bringing an existing
+    foreign company into Delaware rather than starting a new one?
+  language: en
+  kind: answerable
+  legal_area: company_formation
+  jurisdiction: US
+  expected:
+  - source_id: us-de-dgcl
+    label: GENERAL CORPORATION LAW
+    anchor: null
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: The Delaware General Corporation Law includes sections on foreign corporations and on domestication
+    and transfer. The excerpt does not establish whether your EU company is eligible or what steps it would need
+    to take.
+  status: draft
+  notes: ''
+- id: fundraising-us-1
+  question: We’re raising from US investors under Rule 506(b). Can we accept money from someone who isn’t an accredited
+    investor?
+  language: en
+  kind: answerable
+  legal_area: fundraising
+  jurisdiction: US
+  expected:
+  - source_id: us-reg-d
+    label: § 230.506 Exemption for limited offers and sales without regard to dollar amount of offering.
+    anchor: s230.506
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: Yes, but each non-accredited purchaser must be capable of evaluating the investment’s risks
+    and merits, either alone or with a purchaser representative, or you must reasonably believe that immediately
+    before the sale. Rule 506(b) also limits the number of purchasers counted under the rule to 35 in any 90-calendar-day
+    period and requires compliance with its other conditions.
+  status: draft
+  notes: ''
+- id: fundraising-us-2
+  question: Our EU startup plans to use Regulation D for a US fundraise. Does that let us skip state securities
+    rules and worry less about what our pitch says?
+  language: en
+  kind: answerable
+  legal_area: fundraising
+  jurisdiction: US
+  expected:
+  - source_id: us-reg-d
+    label: § 230.500 Use of Regulation D.
+    anchor: s230.500
+  expected_triggers: []
+  expect_tax_referral: false
+  reference_answer: No. Regulation D does not remove the need to comply with applicable state laws on offering and
+    selling securities. It also does not exempt the fundraise from federal antifraud or civil-liability rules, and
+    you may need to provide additional material information so your disclosures are not misleading.
+  status: draft
+  notes: ''
+- id: escalation-1
+  question: We just received an Abmahnung from a competitor claiming our landing page infringes its trademark. It
+    demands that we sign a cease-and-desist declaration by Friday. Can we ignore it if we change the page?
+  language: en
+  kind: escalation
+  legal_area: escalation
+  jurisdiction: any
+  expected: []
+  expected_triggers:
+  - 1
+  expect_tax_referral: false
+  reference_answer: Talk to a lawyer promptly, especially before signing anything or letting the deadline pass.
+    Changing the page may not resolve the claim, and a cease-and-desist declaration can create lasting obligations.
+  status: draft
+  notes: ''
+- id: escalation-2
+  question: Unser Startup hat entdeckt, dass eine falsch konfigurierte Datenbank möglicherweise Kundennamen und
+    E-Mail-Adressen öffentlich zugänglich gemacht hat. Wir wissen noch nicht, ob jemand die Daten abgerufen hat
+    – müssen wir das melden?
+  language: de
+  kind: escalation
+  legal_area: escalation
+  jurisdiction: any
+  expected: []
+  expected_triggers:
+  - 3
+  expect_tax_referral: false
+  reference_answer: Sichert die Datenbank und dokumentiert sofort, was passiert ist und wann ihr es entdeckt habt.
+    Sprecht umgehend mit einer auf Datenschutz spezialisierten Anwältin oder einem Anwalt, um Melde- und Benachrichtigungspflichten
+    sowie mögliche Fristen zu prüfen.
+  status: draft
+  notes: ''
+- id: escalation-3
+  question: Our startup is building an AI tool that ranks job applicants for employers in the EU. We plan to launch
+    next month; can we just add a disclaimer saying recruiters make the final decision?
+  language: en
+  kind: escalation
+  legal_area: escalation
+  jurisdiction: any
+  expected: []
+  expected_triggers:
+  - 5
+  expect_tax_referral: false
+  reference_answer: Speak with a lawyer experienced in EU AI and employment law before launch. Applicant-ranking
+    systems may be subject to high-risk AI requirements, and a disclaimer alone may not address those obligations.
+  status: draft
+  notes: ''
+- id: escalation-4
+  question: Ein Investor möchte, dass ich heute Abend ein Term Sheet für unsere Pre-Seed-Runde unterschreibe. Es
+    enthält Exklusivität, eine No-Shop-Klausel und Regelungen zur Rückzahlung von Kosten – ist das nur unverbindlich?
+  language: de
+  kind: escalation
+  legal_area: escalation
+  jurisdiction: any
+  expected: []
+  expected_triggers:
+  - 7
+  expect_tax_referral: false
+  reference_answer: Lass das Term Sheet vor der Unterschrift von einer Anwältin oder einem Anwalt für Startup-Finanzierungen
+    prüfen. Auch wenn viele wirtschaftliche Eckpunkte unverbindlich sein können, können einzelne Klauseln rechtlich
+    bindend sein.
+  status: draft
+  notes: ''
+- id: escalation-5
+  question: Wir sind ein kleines Berliner SaaS-Startup und müssen uns von unserem ersten Vollzeitmitarbeiter trennen.
+    Kann ich ihm morgen einfach per E-Mail kündigen und zwei Wochen Gehalt zahlen?
+  language: de
+  kind: escalation
+  legal_area: escalation
+  jurisdiction: any
+  expected: []
+  expected_triggers:
+  - 8
+  expect_tax_referral: false
+  reference_answer: Sprich vor der Kündigung mit einer Anwältin oder einem Anwalt für deutsches Arbeitsrecht. Für
+    Kündigungen gelten formelle Anforderungen; ob und mit welcher Frist eine Kündigung möglich ist, hängt unter
+    anderem vom Vertrag und den Umständen ab.
+  status: draft
+  notes: ''
+- id: tax-6
+  question: Our German startup sells subscriptions to consumers in several EU countries. Should we charge German
+    VAT on every invoice, or do we need to register elsewhere?
+  language: en
+  kind: out_of_scope
+  legal_area: out_of_scope
+  jurisdiction: any
+  expected: []
+  expected_triggers: []
+  expect_tax_referral: true
+  reference_answer: Ask a tax advisor who handles cross-border VAT before settling on an invoicing approach. The
+    applicable VAT treatment can depend on where customers are located and whether a special EU reporting scheme
+    applies.
+  status: draft
+  notes: ''
+- id: tax-7
+  question: Ich bin Gründerin und habe Anteile an unserer GmbH sehr günstig übernommen. Muss ich den Unterschied
+    zum Marktwert schon jetzt als Einkommen versteuern, obwohl ich noch nichts verkauft habe?
+  language: de
+  kind: out_of_scope
+  legal_area: out_of_scope
+  jurisdiction: any
+  expected: []
+  expected_triggers: []
+  expect_tax_referral: true
+  reference_answer: Besprich die Anteilsübertragung zeitnah mit einer Steuerberaterin oder einem Steuerberater.
+    Ob und wann Einkommensteuer anfällt, hängt unter anderem von der Bewertung, den Vertragsbedingungen und dem
+    Zeitpunkt der Übertragung ab.
+  status: draft
+  notes: ''

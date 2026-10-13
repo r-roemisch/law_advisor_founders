@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f7f5f0;
+  --surface: #ffffff;
+  --ink: #1d2433;
+  --ink-soft: #4a5368;
+  --line: #e2ddd2;
+  --accent: #1f4e79;
+  --accent-soft: #e6eef6;
+  --warn: #8a5a00;
+  --warn-soft: #fbf1dc;
+  --danger: #a12d2d;
+  --danger-soft: #fbe7e7;
+  --ok: #2f6b3a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #12151c;
+    --surface: #1a1f29;
+    --ink: #e8e6e1;
+    --ink-soft: #a9afbd;
+    --line: #2c3340;
+    --accent: #8db8e0;
+    --accent-soft: #1d2a3a;
+    --warn: #e5b85c;
+    --warn-soft: #2d2616;
+    --danger: #f08a8a;
+    --danger-soft: #331c1e;
+    --ok: #8fca98;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-ok: var(--ok);
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-serif);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.answer h1, .answer h2, .answer h3 { font-weight: 600; margin: 1rem 0 0.4rem; }
+.answer p { margin: 0.5rem 0; line-height: 1.65; }
+.answer ul, .answer ol { margin: 0.5rem 0 0.5rem 1.25rem; line-height: 1.6; }
+.answer ul { list-style: disc; }
+.answer ol { list-style: decimal; }
+.answer strong { font-weight: 600; }
+.answer em { color: var(--ink-soft); }
+.answer table { border-collapse: collapse; margin: 0.75rem 0; font-size: 0.9em; }
+.answer th, .answer td { border: 1px solid var(--line); padding: 0.3rem 0.5rem; }

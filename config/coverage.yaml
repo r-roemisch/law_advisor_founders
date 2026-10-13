@@ -1,0 +1,326 @@
+# Coverage Map: for each in-scope Legal Area x Jurisdiction cell, the Sources (ids from config/sources.yaml)
+# that must be in the Corpus for the cell to count as covered. See CONTEXT.md ("Coverage Map") and docs/SCOPE.md.
+#
+# Not legal advice. The Founder Legal Guide provides general legal information only. It does not replace
+# consultation with a qualified lawyer.
+#
+# Scope decisions applied 2026-10-12.
+#
+# Conventions
+#   - A cell lists only Sources of its own Jurisdiction. EU law also applies to German companies, but that is
+#     covered by the EU cell. The answer layer combines EU + DE for a German Founder Profile.
+#   - depth: deep     -> required set includes Tier 1, Tier 2 and at least one Tier 3 Source.
+#     depth: standard -> core Tier 1 acts plus 1-2 practical (Tier 2 or 3) Sources.
+#   - A Pending Proposal may be required (so the guide can say what is coming) but is never presented as law.
+#
+# Cells deliberately NOT in scope (docs/SCOPE.md, "US coverage"):
+#   - contracts x US              US contract law is state common law and UCC; not listed in US coverage.
+#                                 (ROSCA and the California Automatic Renewal Law sit under platform_law x US.)
+#   - cybersecurity_product x US  Not listed in US coverage (e.g. state breach-notification laws, CA IoT law).
+#   - employment x US                US employment law is out of scope (docs/SCOPE.md).
+#   - "Other states" comprehensive privacy laws: summary table only, written by the project from the states'
+#     official sources (NCSL dropped under ADR 0006). Not yet a Source; see docs/PLAN.md days 7-8.
+
+cells:
+
+  # ---------------------------------------------------------------- EU
+  - legal_area: data_protection
+    jurisdiction: EU
+    depth: deep
+    required:
+      - eu-gdpr
+      - eu-eprivacy
+      - eu-scc-transfers
+      - eu-scc-processors
+      - eu-dpf-adequacy
+      - eu-data-act
+      - eu-digital-omnibus-proposal
+      - eu-edpb-consent
+      - eu-edpb-legitimate-interest
+      - eu-wp29-dpia
+      - eu-edpb-transfers-supplementary-measures
+      - eu-edpb-territorial-scope
+      - eu-edpb-deceptive-design
+      - eu-edpb-controller-processor
+      - eu-edpb-breach-notification
+      - eu-edpb-eprivacy-art53
+      - eu-edpb-ai-models-opinion
+      - eu-edpb-sme-guide
+      - eu-youreurope-gdpr
+      - eu-cnil-gdpr-developers
+
+  - legal_area: ai_regulation
+    jurisdiction: EU
+    depth: deep
+    required:
+      - eu-ai-act
+      - eu-ai-omnibus
+      - eu-gdpr
+      - eu-copyright-dsm
+      - eu-pld-2024
+      - eu-sme-recommendation
+      - eu-com-ai-system-definition
+      - eu-com-ai-prohibited-practices
+      - eu-com-gpai-guidelines
+      - eu-gpai-code-of-practice
+      - eu-com-gpai-training-summary-template
+      - eu-com-ai-transparency-guidelines
+      - eu-ai-content-code-of-practice
+      - eu-com-high-risk-guidelines-draft
+      - eu-edpb-ai-models-opinion
+      - eu-cnil-ai-recommendations
+      - eu-ai-act-service-desk-art50
+
+  - legal_area: platform_law
+    jurisdiction: EU
+    depth: deep
+    required:
+      - eu-dsa
+      - eu-ecommerce-directive
+      - eu-consumer-rights-directive
+      - eu-ucpd
+      - eu-digital-content-directive
+      - eu-accessibility-act
+      - eu-eprivacy
+      - eu-copyright-dsm
+      - eu-digital-omnibus-proposal
+      - eu-com-dsa-minors-guidelines
+      - eu-edpb-dsa-gdpr-interplay
+      - eu-edpb-deceptive-design
+      - eu-youreurope-consumer-contracts
+
+  - legal_area: company_formation
+    jurisdiction: EU
+    depth: standard
+    required:
+      - eu-sme-recommendation
+      - eu-youreurope-starting-business
+
+  - legal_area: contracts
+    jurisdiction: EU
+    depth: standard
+    required:
+      - eu-unfair-terms-directive
+      - eu-consumer-rights-directive
+      - eu-digital-content-directive
+      - eu-rome-i
+      - eu-eidas
+      - eu-scc-processors
+      - eu-data-act
+      - eu-com-data-act-faq
+      - eu-youreurope-consumer-contracts
+
+  - legal_area: intellectual_property
+    jurisdiction: EU
+    depth: standard
+    required:
+      - eu-software-directive
+      - eu-copyright-dsm
+      - eu-trade-secrets-directive
+      - eu-trademark-regulation
+      - eu-youreurope-ip
+      - eu-euipo-ideas-powered
+      - eu-joinup-licensing-assistant
+
+  - legal_area: employment
+    jurisdiction: EU
+    depth: standard
+    required:
+      - eu-rome-i
+      - eu-youreurope-employer-registration
+
+  - legal_area: cybersecurity_product
+    jurisdiction: EU
+    depth: standard
+    required:
+      - eu-nis2
+      - eu-cra
+      - eu-pld-2024
+      - eu-enisa-nis2-guidance
+      - eu-com-cra-overview
+      - eu-enisa-sme-guide
+
+  - legal_area: fundraising
+    jurisdiction: EU
+    depth: standard
+    required:
+      - eu-youreurope-access-finance
+
+  # ---------------------------------------------------------------- Germany
+  - legal_area: data_protection
+    jurisdiction: DE
+    depth: deep
+    required:
+      - de-bdsg
+      - de-tdddg
+      - de-dadg
+      - de-dsk-oh-digital-services
+      - de-dsk-oh-ai
+      - de-dsk-dpia-list
+      - de-ihk-muc-data-protection
+      - de-egp-online-shop-legal
+
+  - legal_area: ai_regulation
+    jurisdiction: DE
+    depth: deep
+    required:
+      - de-ki-mig
+      - de-urhg
+      - de-bnetza-ai-faq
+      - de-dsk-oh-ai
+      - de-ihk-muc-ai-act
+      - de-ihk-ai-act-brochure
+
+  - legal_area: platform_law
+    jurisdiction: DE
+    depth: deep
+    required:
+      - de-ddg
+      - de-tdddg
+      - de-bgb
+      - de-egbgb
+      - de-uwg
+      - de-bfsg
+      - de-dsk-oh-digital-services
+      - de-egp-imprint
+      - de-ihk-muc-imprint
+      - de-egp-online-shop-legal
+
+  - legal_area: company_formation
+    jurisdiction: DE
+    depth: standard
+    required:
+      - de-gmbhg
+      - de-hgb
+      - de-gp-gmbh
+      - de-gp-ug
+      - de-egp-legal-forms
+
+  - legal_area: contracts
+    jurisdiction: DE
+    depth: standard
+    required:
+      - de-bgb
+      - de-egbgb
+      - de-gp-terms
+
+  - legal_area: intellectual_property
+    jurisdiction: DE
+    depth: standard
+    required:
+      - de-urhg
+      - de-markeng
+      - de-geschgehg
+      - de-dpma-trademarks
+      - de-gp-trademark
+
+  - legal_area: employment
+    jurisdiction: DE
+    depth: standard
+    required:
+      - de-bgb
+      - de-kschg
+      - de-nachwg
+      - de-arbzg
+      - de-sgb-iv
+      - de-bdsg
+      - de-drv-status-determination
+      - de-gp-employment-contract
+      - de-gp-false-self-employment
+
+  - legal_area: cybersecurity_product
+    jurisdiction: DE
+    depth: standard
+    required:
+      - de-bsig
+      - de-prodhaftg
+      - de-bsi-nis2
+      - de-bsi-it-grundschutz
+
+  - legal_area: fundraising
+    jurisdiction: DE
+    depth: standard
+    required:
+      - de-gmbhg
+      - de-gp-shareholder-agreement
+      - de-gp-esop-vsop
+      - de-gp-convertible-loan
+      - de-gp-term-sheet
+
+  # ---------------------------------------------------------------- US (market-entry perspective)
+  - legal_area: data_protection
+    jurisdiction: US
+    depth: deep
+    required:
+      - us-ftc-act-s5
+      - us-coppa-statute
+      - us-coppa-rule
+      - us-ca-ccpa
+      - us-ca-cppa-regulations
+      - us-ca-caloppa
+      - us-ftc-coppa-faq
+      - us-dpf-program
+      - us-ftc-protecting-personal-info
+
+  - legal_area: ai_regulation
+    jurisdiction: US
+    depth: deep
+    required:
+      - us-ftc-act-s5
+      - us-copyright-act-core
+      - us-ca-cppa-regulations
+      - us-ca-sb53
+      - us-ca-ab2013
+      - us-ca-sb942
+      - us-ca-bot-disclosure
+      - us-co-sb26-189
+      - us-tx-traiga
+      - us-copyright-office-ai-part1
+      - us-copyright-office-ai-part2
+      - us-copyright-office-ai-part3
+      - us-nist-ai-rmf
+      - us-ftc-ai-claims-blog
+      - us-ftc-operation-ai-comply
+
+  - legal_area: platform_law
+    jurisdiction: US
+    depth: deep
+    required:
+      - us-ftc-act-s5
+      - us-section-230
+      - us-dmca-512
+      - us-dmca-agent-rule
+      - us-can-spam-statute
+      - us-can-spam-rule
+      - us-rosca
+      - us-ada-title-iii
+      - us-ca-auto-renewal
+      - us-ftc-can-spam-guide
+      - us-doj-ada-web-guidance
+      - us-ftc-advertising-basics
+
+  - legal_area: intellectual_property
+    jurisdiction: US
+    depth: standard
+    required:
+      - us-copyright-act-core
+      - us-dmca-512
+      - us-copyright-office-ai-part2
+      - us-choosealicense
+
+  - legal_area: company_formation
+    jurisdiction: US
+    depth: standard
+    required:
+      - us-de-dgcl
+      - us-sba-business-structure
+
+  - legal_area: fundraising
+    jurisdiction: US
+    depth: standard
+    required:
+      - us-de-dgcl
+      - us-reg-d
+      - us-sec-rule-506b
+      - us-yc-safe
+      - us-sba-fund-business

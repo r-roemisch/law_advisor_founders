@@ -1,0 +1,3 @@
+# Tier 3 limited to openly reusable and public-sector sources
+
+Law-firm blogs hold some of the best practical startup guidance, but putting them into the Corpus is text and data mining. It is allowed under § 44b UrhG only where the rightsholder has not opted out in machine-readable form, and showing long excerpts raises a separate reproduction question. Tier 3 is therefore limited to a small curated set of public-sector or openly reusable sources (gründerplattform.de, IHKs, SBA, FTC business guidance, YC's public SAFE documents). Robots and TDM opt-outs are honoured, and answers show only short excerpts with links. The guide follows the law it explains.

@@ -1,0 +1,13 @@
+.env
+.venv/
+__pycache__/
+*.py[oc]
+.pytest_cache/
+.ruff_cache/
+node_modules/
+.next/
+out/
+*.log
+data/
+soft_requirements.txt
+hard_requirements.txt

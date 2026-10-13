@@ -1,0 +1,5 @@
+# Models chosen within the account's OpenRouter guardrail
+
+The OpenRouter workspace this project runs on has a guardrail (data policy and provider restrictions) that excludes every endpoint for Claude Haiku 5.5, bge-m3, Qwen3-Embedding-4B, multilingual-e5, Voyage and Gemini embeddings. We kept the guardrail, a sensible default for an app that handles founders' legal questions, and chose models it allows. The helper model is GPT-6 Luna (planned: Claude Haiku). The default embedding is text-embedding-3-small (planned: bge-m3). The embedding comparison is text-embedding-3-small vs mistral-embed vs text-embedding-3-large (planned: bge-m3 vs Qwen3-4B vs text-embedding-3-small). Relaxing the guardrail would allow the original plan; only `config/` would change.
+
+Separately, Claude Sonnet 5.5, Claude Haiku 5.5 and the GPT-6 models accept no `temperature` parameter. With strict provider routing (`require_parameters`), sending one excludes every endpoint, so the model factory checks OpenRouter's model list and sends `temperature` only where it is supported.

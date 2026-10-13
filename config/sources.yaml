@@ -1,0 +1,2062 @@
+# Source Registry: every Source the Founder Legal Guide should hold, and where it comes from.
+# Terms (Source, Source Tier, Legal Area, Jurisdiction, Legal Status, Pending Proposal) are defined in CONTEXT.md;
+# the scope (Legal Areas, US coverage, Tier 3 policy) is in docs/SCOPE.md. The Coverage Map is config/coverage.yaml.
+#
+# Not legal advice. The Founder Legal Guide provides general legal information only. It does not replace
+# consultation with a qualified lawyer.
+#
+# Scope decisions applied 2026-10-12. Identifiers were checked on 2026-10-12: CELEX numbers against the CELLAR SPARQL endpoint,
+# gesetze-im-internet slugs against gii-toc.xml, eCFR parts against the eCFR structure API, Federal Register
+# document numbers against the federalregister.gov API, and URLs by HTTP request. Anything not confirmed carries
+# "UNVERIFIED: ..." in `notes`.
+#
+# How to add a Source
+#   1. Pick an id: kebab-case, prefixed with its jurisdiction (eu-, de-, us-, us-ca-, us-de-, us-co-, us-tx-).
+#   2. Set the tier:
+#        1 = primary law (acts, codes, regulations, adopted implementing acts)
+#        2 = official guidance from a regulator or authority that interprets a specific law
+#            (EDPB guidelines, Commission guidelines, FTC rule FAQs, Copyright Office reports, NIST frameworks)
+#        3 = curated practical how-to pages, public-sector or openly reusable only (ADR 0006): gruenderplattform.de,
+#            existenzgruendungsportal.de, IHKs, Your Europe, SBA, FTC business blog, YC SAFE documents.
+#            Honour robots.txt and TDM opt-outs at ingestion. Answers show short excerpts with a link.
+#   3. Choose an adapter and its `ref` locator:
+#        eurlex           {celex: "..."}                     latest consolidated text if one exists
+#        gii              {slug: "...", sections: [...]}     gesetze-im-internet.de path segment; optional
+#                                                            sections, e.g. ["305-310", "Art 246-246e"]
+#        neuris           {eli: "..."}                       rechtsinformationen.bund.de (not used yet)
+#        uscode           {title: N, sections: ["a-b", ...]}
+#        ecfr             {title: N, part: N, sections: [...]}  sections optional
+#        federal_register {document_number: "..."}
+#        edpb | ec_digital | web_pinned   {url: "..."}      scraped and pinned
+#   4. `update: auto` for structured adapters (eurlex, gii, neuris, uscode, ecfr, federal_register), where
+#      changes are applied automatically. `update: review` for scraped pages, where a change creates a
+#      "review needed" Change Record.
+#   Optional: short_title, the citation name ("GDPR", or per language {en: GDPR, de: DSGVO}).
+#   5. legal_status: pending_proposal | in_force | repealed. Put staged applicability in `applies_from`.
+#   6. If the Source is required for a Legal Area x Jurisdiction cell, add its id to config/coverage.yaml.
+
+sources:
+
+  # ======================================================================
+  # EU, Tier 1: primary law
+  # ======================================================================
+
+  # --- Data Protection ---
+  - id: eu-gdpr
+    title: "Regulation (EU) 2016/679 – General Data Protection Regulation (GDPR)"
+    short_title: {en: "GDPR", de: "DSGVO"}
+    jurisdiction: EU
+    legal_areas: [data_protection, ai_regulation]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: [{date: 2018-05-25, what: "Application of the whole Regulation"}]
+    adapter: eurlex
+    ref: {celex: "32016R0679"}
+    update: auto
+    notes: "Amendments proposed in the Digital Omnibus COM(2025)837 (eu-digital-omnibus-proposal); not adopted as of 2026-10-12."
+
+  - id: eu-eprivacy
+    title: "Directive 2002/58/EC – ePrivacy Directive (privacy and electronic communications)"
+    short_title: {en: "ePrivacy Directive", de: "ePrivacy-Richtlinie"}
+    jurisdiction: EU
+    legal_areas: [data_protection, platform_law]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32002L0058"}
+    update: auto
+    notes: "Art. 5(3) on cookies and terminal-device access. Transposed in Germany by the TDDDG (de-tdddg). The Digital Omnibus COM(2025)837 proposes moving cookie rules into the GDPR."
+
+  - id: eu-scc-transfers
+    title: "Commission Implementing Decision (EU) 2021/914 – Standard contractual clauses for transfers to third countries"
+    short_title: {en: "SCC Decision (transfers)", de: "SCC-Beschluss (Übermittlungen)"}
+    jurisdiction: EU
+    legal_areas: [data_protection, contracts]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32021D0914"}
+    update: auto
+    notes: ""
+
+  - id: eu-scc-processors
+    title: "Commission Implementing Decision (EU) 2021/915 – Standard contractual clauses between controllers and processors (Art. 28(7) GDPR)"
+    short_title: {en: "SCC Decision (processors)", de: "SCC-Beschluss (Auftragsverarbeiter)"}
+    jurisdiction: EU
+    legal_areas: [contracts, data_protection]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32021D0915"}
+    update: auto
+    notes: "Optional template for data processing agreements (DPAs)."
+
+  - id: eu-dpf-adequacy
+    title: "Commission Implementing Decision (EU) 2023/1795 – Adequacy of the EU-US Data Privacy Framework"
+    short_title: {en: "EU-US DPF Decision", de: "EU-US-DPF-Beschluss"}
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32023D1795"}
+    update: auto
+    notes: "Covers transfers only to US organisations certified under the DPF (see us-dpf-program)."
+
+  - id: eu-digital-omnibus-proposal
+    title: "COM(2025) 837 – Proposal for a Regulation on the simplification of the digital legislative framework (Digital Omnibus)"
+    short_title: {en: "Digital Omnibus proposal", de: "Digital-Omnibus-Vorschlag"}
+    jurisdiction: EU
+    legal_areas: [data_protection, platform_law, cybersecurity_product]
+    tier: 1
+    languages: [en, de]
+    legal_status: pending_proposal
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "52025PC0837"}
+    update: auto
+    notes: "Proposal of 2025-11-19. Would amend the GDPR, ePrivacy Directive, Data Act and NIS2, and repeal the P2B Regulation 2019/1150 and the Data Governance Act 2022/868. CELLAR held no adopted act as of 2026-10-12. Never present as law in force."
+
+  # --- AI Regulation ---
+  - id: eu-ai-act
+    title: "Regulation (EU) 2024/1689 – Artificial Intelligence Act (as amended by Regulation (EU) 2026/1744)"
+    short_title: {en: "AI Act", de: "KI-VO"}
+    jurisdiction: EU
+    legal_areas: [ai_regulation]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from:
+      - {date: 2024-08-01, what: "Entry into force"}
+      - {date: 2025-02-02, key: prohibitions, what: "Chapters I-II: definitions, AI literacy (Art. 4, narrowed by 2026/1744), prohibited practices (Art. 5)"}
+      - {date: 2025-08-02, key: gpai, what: "GPAI model obligations (Chapter V), governance, penalties, notified bodies"}
+      - {date: 2026-08-02, key: general, what: "General application, including Art. 50 transparency obligations"}
+      - {date: 2026-12-02, key: new_prohibitions, what: "New prohibitions Art. 5(1)(ba)-(bb) (non-consensual intimate deepfakes, CSAM); Art. 50(2) marking for generative systems placed on the market before 2026-08-02"}
+      - {date: 2027-08-02, what: "GPAI models placed on the market before 2025-08-02 must comply"}
+      - {date: 2027-12-02, key: high_risk_annex_iii, what: "High-risk obligations (Chapter III, Sections 1-3) for Annex III systems (moved from 2026-08-02 by 2026/1744)"}
+      - {date: 2028-08-02, key: high_risk_annex_i, what: "High-risk obligations for Annex I (product safety) systems (moved from 2027-08-02 by 2026/1744)"}
+      - {date: 2030-08-02, what: "Legacy high-risk systems used by public authorities"}
+    adapter: eurlex
+    ref: {celex: "32024R1689"}
+    update: auto
+    notes: "Ingest the latest consolidated version. CELLAR lists 02024R1689-20260727, which includes the Digital Omnibus on AI. Dates were taken from the OJ text of 2026/1744 (Art. 113 as amended)."
+
+  - id: eu-ai-omnibus
+    title: "Regulation (EU) 2026/1744 – Digital Omnibus on AI (amending Regulations 2024/1689, 2018/1139 and 2023/1230)"
+    short_title: {en: "AI Omnibus Regulation", de: "KI-Omnibus-Verordnung"}
+    jurisdiction: EU
+    legal_areas: [ai_regulation]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: [{date: 2026-07-27, what: "Entry into force (OJ L 2026/1744 of 2026-07-24, third day after publication)"}]
+    adapter: eurlex
+    ref: {celex: "32026R1744"}
+    update: auto
+    notes: "Amending act. Kept separately so that recitals and transitional rules (SME/SMC relief, high-risk postponement, Art. 50(2) grace period) stay retrievable. Its operative changes are already in the consolidated eu-ai-act."
+
+  - id: eu-sme-recommendation
+    title: "Commission Recommendation 2003/361/EC – Definition of micro, small and medium-sized enterprises"
+    short_title: {en: "SME Recommendation", de: "KMU-Empfehlung"}
+    jurisdiction: EU
+    legal_areas: [company_formation, ai_regulation]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32003H0361"}
+    update: auto
+    notes: "Non-binding, but the AI Act (Art. 3(14a) as amended), the Data Act and others refer to it for SME relief. The companion Recommendation (EU) 2025/1099 on small mid-caps is CELEX 32025H1099 (not added)."
+
+  # --- Platform & Internet Law ---
+  - id: eu-dsa
+    title: "Regulation (EU) 2022/2065 – Digital Services Act (DSA)"
+    short_title: {en: "DSA", de: "DSA"}
+    jurisdiction: EU
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: [{date: 2024-02-17, what: "Full application to all intermediary services"}]
+    adapter: eurlex
+    ref: {celex: "32022R2065"}
+    update: auto
+    notes: ""
+
+  - id: eu-ecommerce-directive
+    title: "Directive 2000/31/EC – e-Commerce Directive"
+    short_title: {en: "e-Commerce Directive", de: "E-Commerce-Richtlinie"}
+    jurisdiction: EU
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32000L0031"}
+    update: auto
+    notes: "Arts. 12-15 (liability) were moved into the DSA. Information duties (Art. 5) and the country-of-origin principle remain. Implemented in Germany by the DDG."
+
+  - id: eu-consumer-rights-directive
+    title: "Directive 2011/83/EU – Consumer Rights Directive"
+    short_title: {en: "Consumer Rights Directive", de: "Verbraucherrechte-Richtlinie"}
+    jurisdiction: EU
+    legal_areas: [platform_law, contracts]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: [{date: 2026-06-19, what: "Withdrawal function ('withdrawal button', Art. 11a) inserted by Directive (EU) 2023/2673"}]
+    adapter: eurlex
+    ref: {celex: "32011L0083"}
+    update: auto
+    notes: "Use the consolidated text (latest in CELLAR: 02011L0083-20260927), which includes the Omnibus Directive 2019/2161 and Directive (EU) 2023/2673 (CELEX 32023L2673). UNVERIFIED: which BGB section implements the withdrawal button in Germany."
+
+  - id: eu-ucpd
+    title: "Directive 2005/29/EC – Unfair Commercial Practices Directive"
+    short_title: {en: "UCPD", de: "UGP-Richtlinie"}
+    jurisdiction: EU
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32005L0029"}
+    update: auto
+    notes: "Fake reviews, dark patterns towards consumers. Transposed in Germany by the UWG."
+
+  - id: eu-accessibility-act
+    title: "Directive (EU) 2019/882 – European Accessibility Act"
+    short_title: {en: "European Accessibility Act", de: "Barrierefreiheitsrichtlinie"}
+    jurisdiction: EU
+    legal_areas: [platform_law, cybersecurity_product]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: [{date: 2025-06-28, what: "Application of national transposing measures (DE: BFSG)"}]
+    adapter: eurlex
+    ref: {celex: "32019L0882"}
+    update: auto
+    notes: "Covers e-commerce services and consumer-facing digital services. Microenterprises providing services are exempt."
+
+  # --- Contracts & Terms ---
+  - id: eu-unfair-terms-directive
+    title: "Council Directive 93/13/EEC – Unfair Terms in Consumer Contracts"
+    short_title: {en: "Unfair Terms Directive", de: "Klausel-Richtlinie"}
+    jurisdiction: EU
+    legal_areas: [contracts]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "31993L0013"}
+    update: auto
+    notes: "Transposed in Germany by BGB §§ 305-310."
+
+  - id: eu-digital-content-directive
+    title: "Directive (EU) 2019/770 – Contracts for the supply of digital content and digital services"
+    short_title: {en: "Digital Content Directive", de: "Digitale-Inhalte-Richtlinie"}
+    jurisdiction: EU
+    legal_areas: [contracts, platform_law]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: [{date: 2022-01-01, what: "Application of national transposing measures (DE: BGB §§ 327 ff.)"}]
+    adapter: eurlex
+    ref: {celex: "32019L0770"}
+    update: auto
+    notes: "Conformity and update duties for B2C SaaS and apps, including 'paying with data'."
+
+  - id: eu-rome-i
+    title: "Regulation (EC) No 593/2008 – Law applicable to contractual obligations (Rome I)"
+    short_title: {en: "Rome I", de: "Rom I"}
+    jurisdiction: EU
+    legal_areas: [contracts, employment]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32008R0593"}
+    update: auto
+    notes: "Choice of law in B2B and B2C terms (Art. 6) and for remote employment contracts (Art. 8)."
+
+  - id: eu-eidas
+    title: "Regulation (EU) No 910/2014 – eIDAS (electronic identification and trust services), as amended by Regulation (EU) 2024/1183"
+    short_title: {en: "eIDAS", de: "eIDAS"}
+    jurisdiction: EU
+    legal_areas: [contracts]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32014R0910"}
+    update: auto
+    notes: "E-signatures (simple, advanced, qualified) for contracts. The amending act 2024/1183 (CELEX 32024R1183, European Digital Identity Wallet) is in the consolidated text."
+
+  - id: eu-data-act
+    title: "Regulation (EU) 2023/2854 – Data Act"
+    short_title: {en: "Data Act", de: "Data Act"}
+    jurisdiction: EU
+    legal_areas: [data_protection, contracts]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from:
+      - {date: 2025-09-12, what: "General application (data-sharing duties, cloud switching, B2B unfair terms for new contracts)"}
+      - {date: 2026-09-12, what: "Art. 3(1) access-by-design for connected products placed on the market after this date"}
+      - {date: 2027-01-12, what: "Switching charges for data processing services abolished"}
+      - {date: 2027-09-12, what: "Art. 13 unfair-terms control extends to certain contracts concluded before 2025-09-12"}
+    adapter: eurlex
+    ref: {celex: "32023R2854"}
+    update: auto
+    notes: "Amendments proposed by the Digital Omnibus COM(2025)837 (pending). German enforcement law: DADG (de-dadg)."
+
+  # --- Intellectual Property ---
+  - id: eu-copyright-dsm
+    title: "Directive (EU) 2019/790 – Copyright in the Digital Single Market (DSM Directive)"
+    short_title: {en: "DSM Copyright Directive", de: "DSM-Urheberrechtsrichtlinie"}
+    jurisdiction: EU
+    legal_areas: [intellectual_property, ai_regulation, platform_law]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32019L0790"}
+    update: auto
+    notes: "Art. 3/4 text-and-data-mining exceptions and the machine-readable opt-out (relevant to AI training and AI Act Art. 53(1)(c)). Art. 17 covers upload platforms. Transposed in Germany by UrhG § 44b and § 60d, and the UrhDaG."
+
+  - id: eu-software-directive
+    title: "Directive 2009/24/EC – Legal protection of computer programs (Software Directive)"
+    short_title: {en: "Software Directive", de: "Software-Richtlinie"}
+    jurisdiction: EU
+    legal_areas: [intellectual_property]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32009L0024"}
+    update: auto
+    notes: "Transposed in Germany by UrhG §§ 69a-69g."
+
+  - id: eu-trade-secrets-directive
+    title: "Directive (EU) 2016/943 – Trade Secrets Directive"
+    short_title: {en: "Trade Secrets Directive", de: "Geschäftsgeheimnis-Richtlinie"}
+    jurisdiction: EU
+    legal_areas: [intellectual_property]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32016L0943"}
+    update: auto
+    notes: "Transposed in Germany by the GeschGehG."
+
+  - id: eu-trademark-regulation
+    title: "Regulation (EU) 2017/1001 – European Union Trade Mark Regulation (EUTMR)"
+    short_title: {en: "EUTMR", de: "UMV"}
+    jurisdiction: EU
+    legal_areas: [intellectual_property]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: eurlex
+    ref: {celex: "32017R1001"}
+    update: auto
+    notes: ""
+
+  # --- Cybersecurity & Product Rules ---
+  - id: eu-nis2
+    title: "Directive (EU) 2022/2555 – NIS2 Directive"
+    short_title: {en: "NIS2", de: "NIS-2-Richtlinie"}
+    jurisdiction: EU
+    legal_areas: [cybersecurity_product]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: [{date: 2024-10-18, what: "Application of national transposing measures (DE: BSIG 2025)"}]
+    adapter: eurlex
+    ref: {celex: "32022L2555"}
+    update: auto
+    notes: "Amendments proposed by the Digital Omnibus COM(2025)837 (pending)."
+
+  - id: eu-cra
+    title: "Regulation (EU) 2024/2847 – Cyber Resilience Act (CRA)"
+    short_title: {en: "CRA", de: "CRA"}
+    jurisdiction: EU
+    legal_areas: [cybersecurity_product]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from:
+      - {date: 2024-12-10, what: "Entry into force"}
+      - {date: 2026-06-11, what: "Provisions on notification of conformity assessment bodies (Chapter IV)"}
+      - {date: 2026-09-11, what: "Reporting obligations for actively exploited vulnerabilities and severe incidents (Art. 14)"}
+      - {date: 2027-12-11, what: "General application"}
+    adapter: eurlex
+    ref: {celex: "32024R2847"}
+    update: auto
+    notes: ""
+
+  - id: eu-pld-2024
+    title: "Directive (EU) 2024/2853 – Product Liability Directive (new; covers software and AI)"
+    short_title: {en: "Product Liability Directive", de: "Produkthaftungsrichtlinie"}
+    jurisdiction: EU
+    legal_areas: [cybersecurity_product, ai_regulation]
+    tier: 1
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: [{date: 2026-12-09, what: "Transposition deadline. Applies to products placed on the market or put into service after this date."}]
+    adapter: eurlex
+    ref: {celex: "32024L2853"}
+    update: auto
+    notes: "A corrigendum was published 2026-05-07 (CELEX 32024L2853R(01)). Repeals 85/374/EEC with effect from 2026-12-09."
+
+  # --- Company Formation, Employment, Fundraising (standard depth) ---
+  # ======================================================================
+  # EU, Tier 2: official guidance
+  # ======================================================================
+
+  - id: eu-edpb-consent
+    title: "EDPB Guidelines 05/2020 on consent under Regulation 2016/679"
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/documents/guideline/guidelines-052020-on-consent-under-regulation-2016679_en"}
+    update: review
+    notes: ""
+
+  - id: eu-edpb-legitimate-interest
+    title: "EDPB Guidelines 1/2024 on processing of personal data based on Article 6(1)(f) GDPR (legitimate interest)"
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/public-consultations/guidelines-12024-on-processing-of-personal-data-based-on-article-61f-gdpr_en"}
+    update: review
+    notes: "UNVERIFIED: whether a final post-consultation version has been adopted. The URL is the public-consultation version; replace it with the final version if one exists."
+
+  - id: eu-wp29-dpia
+    title: "WP29 Guidelines on Data Protection Impact Assessment (WP248 rev.01), endorsed by the EDPB"
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://ec.europa.eu/newsroom/article29/items/611236"}
+    update: review
+    notes: "Criteria for when a DPIA is required. The German national 'Muss-Liste' is de-dsk-dpia-list."
+
+  - id: eu-edpb-transfers-supplementary-measures
+    title: "EDPB Recommendations 01/2020 on measures that supplement transfer tools"
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/documents/recommendation/recommendations-012020-on-measures-that-supplement-transfer-tools-to_en"}
+    update: review
+    notes: "Transfer impact assessments under the SCCs."
+
+  - id: eu-edpb-territorial-scope
+    title: "EDPB Guidelines 3/2018 on the territorial scope of the GDPR (Article 3)"
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/documents/guideline/guidelines-32018-on-the-territorial-scope-of-the-gdpr-article-3-version-adopted_en"}
+    update: review
+    notes: ""
+
+  - id: eu-edpb-deceptive-design
+    title: "EDPB Guidelines 03/2022 on deceptive design patterns in social media platform interfaces"
+    jurisdiction: EU
+    legal_areas: [data_protection, platform_law]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/documents/guideline/guidelines-032022-on-deceptive-design-patterns-in-social-media-platform_en"}
+    update: review
+    notes: "Dark patterns."
+
+  - id: eu-edpb-controller-processor
+    title: "EDPB Guidelines 07/2020 on the concepts of controller and processor in the GDPR"
+    jurisdiction: EU
+    legal_areas: [data_protection, contracts]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/documents/guideline/guidelines-072020-on-the-concepts-of-controller-and-processor-in-the-gdpr_en"}
+    update: review
+    notes: "SaaS vendor roles and DPA content (Art. 28)."
+
+  - id: eu-edpb-breach-notification
+    title: "EDPB Guidelines 9/2022 on personal data breach notification under the GDPR"
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/documents/guideline/guidelines-92022-on-personal-data-breach-notification-under-gdpr_en"}
+    update: review
+    notes: "Supports Escalation Trigger 3 (the 72-hour clock)."
+
+  - id: eu-edpb-eprivacy-art53
+    title: "EDPB Guidelines 2/2023 on the technical scope of Art. 5(3) of the ePrivacy Directive"
+    jurisdiction: EU
+    legal_areas: [data_protection, platform_law]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/documents/guideline/guidelines-22023-on-technical-scope-of-art-53-of-eprivacy-directive_en"}
+    update: review
+    notes: "Cookies, pixels, fingerprinting, and other tracking."
+
+  - id: eu-edpb-ai-models-opinion
+    title: "EDPB Opinion 28/2024 on certain data protection aspects related to the processing of personal data in the context of AI models"
+    jurisdiction: EU
+    legal_areas: [data_protection, ai_regulation]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/documents/opinion-of-the-board-art-64/opinion-282024-on-certain-data-protection-aspects-related-to_en"}
+    update: review
+    notes: "Anonymity of models, legitimate interest for training and deployment, consequences of unlawful training."
+
+  - id: eu-edpb-dsa-gdpr-interplay
+    title: "EDPB Guidelines 3/2025 on the interplay between the DSA and the GDPR"
+    jurisdiction: EU
+    legal_areas: [data_protection, platform_law]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/public-consultations/guidelines-32025-on-the-interplay-between-the-dsa-and-the-gdpr_en"}
+    update: review
+    notes: "The EDPB reports adopting a final version after consultation. UNVERIFIED: the URL of the final version (this one is the consultation page)."
+
+  - id: eu-edpb-sme-guide
+    title: "EDPB Data Protection Guide for Small Business"
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: edpb
+    ref: {url: "https://www.edpb.europa.eu/sme_en"}
+    update: review
+    notes: "Practical but official, so Tier 2."
+
+  - id: eu-com-ai-system-definition
+    title: "Commission Guidelines on the definition of an artificial intelligence system (AI Act Art. 3(1))"
+    jurisdiction: EU
+    legal_areas: [ai_regulation]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-ai-system-definition-facilitate-first-ai-acts-rules-application"}
+    update: review
+    notes: ""
+
+  - id: eu-com-ai-prohibited-practices
+    title: "Commission Guidelines on prohibited artificial intelligence practices (AI Act Art. 5)"
+    jurisdiction: EU
+    legal_areas: [ai_regulation]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-prohibited-artificial-intelligence-ai-practices-defined-ai-act"}
+    update: review
+    notes: "Predates the new Art. 5(1)(ba)-(bb) prohibitions added by 2026/1744. Watch for an update."
+
+  - id: eu-com-gpai-guidelines
+    title: "Commission Guidelines on the scope of obligations for providers of general-purpose AI models"
+    jurisdiction: EU
+    legal_areas: [ai_regulation]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/library/guidelines-scope-obligations-providers-general-purpose-ai-models-under-ai-act"}
+    update: review
+    notes: "Key for the 'fine-tuning makes you a provider' question (AI Role: GPAI model provider)."
+
+  - id: eu-gpai-code-of-practice
+    title: "General-Purpose AI Code of Practice (transparency, copyright, safety and security chapters)"
+    jurisdiction: EU
+    legal_areas: [ai_regulation, intellectual_property]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai"}
+    update: review
+    notes: "Voluntary. Signing is a way to demonstrate compliance with AI Act Arts. 53 and 55."
+
+  - id: eu-com-gpai-training-summary-template
+    title: "Commission explanatory notice and template for the public summary of training content of GPAI models (AI Act Art. 53(1)(d))"
+    jurisdiction: EU
+    legal_areas: [ai_regulation, intellectual_property]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/library/explanatory-notice-and-template-public-summary-training-content-general-purpose-ai-models"}
+    update: review
+    notes: ""
+
+  - id: eu-com-ai-transparency-guidelines
+    title: "Commission Guidelines on the transparency obligations under Article 50 AI Act (C(2026) 5054)"
+    jurisdiction: EU
+    legal_areas: [ai_regulation]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/news/commission-publishes-guidelines-transparency-obligations-providers-and-deployers-certain-ai-systems"}
+    update: review
+    notes: "Dated 2026-07-20. The annex PDF is linked from the AI Act Service Desk (ai-act-service-desk.ec.europa.eu/sites/default/files/2026-07/...). Ingest the PDF rather than the news page."
+
+  - id: eu-ai-content-code-of-practice
+    title: "Code of Practice on Transparency of AI-generated Content (marking and labelling)"
+    jurisdiction: EU
+    legal_areas: [ai_regulation]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content"}
+    update: review
+    notes: "Final version published 2026-06-10. Voluntary. Supports AI Act Art. 50(2), (4) and (5)."
+
+  - id: eu-com-high-risk-guidelines-draft
+    title: "Draft Commission Guidelines on the classification of high-risk AI systems (AI Act Art. 6)"
+    jurisdiction: EU
+    legal_areas: [ai_regulation]
+    tier: 2
+    languages: [en]
+    legal_status: pending_proposal
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/library/draft-commission-guidelines-classification-high-risk-ai-systems"}
+    update: review
+    notes: "Draft of 2026-05-19, consultation closed 2026. Final adoption expected by the end of 2026. Present as a draft, not as settled guidance. Supports the AI Act risk classifier tool and Escalation Trigger 5."
+
+  - id: eu-com-dsa-minors-guidelines
+    title: "Commission Guidelines on the protection of minors online (DSA Art. 28)"
+    jurisdiction: EU
+    legal_areas: [platform_law]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-protection-minors"}
+    update: review
+    notes: ""
+
+  - id: eu-com-data-act-faq
+    title: "Commission Frequently Asked Questions on the Data Act"
+    jurisdiction: EU
+    legal_areas: [data_protection, contracts]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-frequently-asked-questions-about-data-act"}
+    update: review
+    notes: "The Commission's model contractual terms and SCCs for data sharing and cloud contracts could be added once a stable URL is found (UNVERIFIED: URL)."
+
+  - id: eu-enisa-nis2-guidance
+    title: "ENISA Technical Implementation Guidance for Implementing Regulation (EU) 2024/2690 (NIS2)"
+    jurisdiction: EU
+    legal_areas: [cybersecurity_product]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.enisa.europa.eu/publications/nis2-technical-implementation-guidance"}
+    update: review
+    notes: ""
+
+  - id: eu-com-cra-overview
+    title: "European Commission – Cyber Resilience Act policy page and guidance"
+    jurisdiction: EU
+    legal_areas: [cybersecurity_product]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act"}
+    update: review
+    notes: "Hub page. Replace it with formal Commission CRA guidance once published (UNVERIFIED: whether formal guidance exists as of 2026-10)."
+
+  # ======================================================================
+  # Germany, Tier 1: primary law (gesetze-im-internet.de, German only)
+  # ======================================================================
+
+  - id: de-bdsg
+    title: "Bundesdatenschutzgesetz (BDSG)"
+    jurisdiction: DE
+    legal_areas: [data_protection, employment]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "bdsg_2018"}
+    update: auto
+    notes: "§ 26 BDSG on employee data (note the CJEU C-34/21 doubts), § 38 on the data protection officer threshold."
+
+  - id: de-tdddg
+    title: "Telekommunikation-Digitale-Dienste-Datenschutz-Gesetz (TDDDG, formerly TTDSG)"
+    jurisdiction: DE
+    legal_areas: [data_protection, platform_law]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "ttdsg"}
+    update: auto
+    notes: "The gii slug is still 'ttdsg' after the 2024 rename. § 25 covers cookies and terminal-device access. The consent-management ordinance EinwV (slug 'einwv') is not added."
+
+  - id: de-ddg
+    title: "Digitale-Dienste-Gesetz (DDG)"
+    jurisdiction: DE
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: [{date: 2024-05-14, what: "Entry into force, replacing the TMG"}]
+    adapter: gii
+    ref: {slug: "ddg"}
+    update: auto
+    notes: "§ 5 Impressum (imprint duty). DSA enforcement in Germany; the Bundesnetzagentur is the Digital Services Coordinator."
+
+  - id: de-bgb
+    title: "Bürgerliches Gesetzbuch (BGB)"
+    jurisdiction: DE
+    legal_areas: [contracts, platform_law, employment]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "bgb", sections: ["305-310", "312-312k", "327-327u", "355-361", "611-650v"]}
+    update: auto
+    notes: "gii delivers the whole BGB. Relevant parts: §§ 305-310 (AGB control), §§ 312-312k (consumer and distance contracts, cancellation button § 312k), §§ 327-327u (digital products), §§ 355-361 (withdrawal), §§ 611-630 (service and employment contracts, § 611a employee definition, § 622 notice periods), §§ 631 ff. (contracts for work). Consider chunk-level filtering at ingestion."
+
+  - id: de-egbgb
+    title: "Einführungsgesetz zum Bürgerlichen Gesetzbuche (EGBGB)"
+    jurisdiction: DE
+    legal_areas: [platform_law, contracts]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "bgbeg", sections: ["Art 246-246e", "Anlage 1-3"]}
+    update: auto
+    notes: "The gii slug is 'bgbeg'. Relevant parts only: Art. 246-246e (pre-contractual information duties) and Anlage 1-3 (model withdrawal notice and form)."
+
+  - id: de-uwg
+    title: "Gesetz gegen den unlauteren Wettbewerb (UWG)"
+    jurisdiction: DE
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "uwg_2004"}
+    update: auto
+    notes: "Abmahnung risk, email marketing (§ 7), fake reviews. Escalation Trigger 1 applies when a cease-and-desist letter arrives."
+
+  - id: de-bfsg
+    title: "Barrierefreiheitsstärkungsgesetz (BFSG)"
+    jurisdiction: DE
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: [{date: 2025-06-28, what: "Application"}]
+    adapter: gii
+    ref: {slug: "bfsg"}
+    update: auto
+    notes: "Implements the European Accessibility Act (Directive 2019/882)."
+
+  - id: de-ki-mig
+    title: "Gesetz zur Marktüberwachung und Innovationsförderung von künstlicher Intelligenz (KI-Marktüberwachungs- und Innovationsförderungsgesetz, KI-MIG)"
+    jurisdiction: DE
+    legal_areas: [ai_regulation]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: [{date: 2026-07-29, what: "Entry into force; the Bundesnetzagentur becomes AI Act market surveillance authority and single point of contact"}]
+    adapter: gii
+    ref: {slug: "ki-mig"}
+    update: auto
+    notes: "German AI Act implementation law. The entry-into-force date comes from the Bundesnetzagentur press release of 2026-07-29. § 8 sets up a central complaints office."
+
+  - id: de-gmbhg
+    title: "Gesetz betreffend die Gesellschaften mit beschränkter Haftung (GmbHG)"
+    jurisdiction: DE
+    legal_areas: [company_formation, fundraising]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "gmbhg"}
+    update: auto
+    notes: "§ 2 (notarised articles, model protocol), § 5a (UG), § 15 (notarised share transfer), § 43 (director liability), §§ 53-57 (capital increase for financing rounds)."
+
+  - id: de-hgb
+    title: "Handelsgesetzbuch (HGB)"
+    jurisdiction: DE
+    legal_areas: [company_formation]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "hgb", sections: ["1-37a", "238-264"]}
+    update: auto
+    notes: "gii delivers the whole HGB. Relevant parts only: §§ 1-37a (merchants, commercial register, company name) and §§ 238-264 (bookkeeping and annual accounts basics). The rest is out of scope."
+
+  - id: de-urhg
+    title: "Gesetz über Urheberrecht und verwandte Schutzrechte (Urheberrechtsgesetz, UrhG)"
+    jurisdiction: DE
+    legal_areas: [intellectual_property, ai_regulation]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "urhg"}
+    update: auto
+    notes: "§ 2 (protected works; AI outputs), § 31 (licences), §§ 43 and 69b (employee works and software), § 44b (TDM and machine-readable opt-out), § 60d (scientific TDM), §§ 69a-69g (software)."
+
+  - id: de-markeng
+    title: "Gesetz über den Schutz von Marken und sonstigen Kennzeichen (Markengesetz, MarkenG)"
+    jurisdiction: DE
+    legal_areas: [intellectual_property]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "markeng"}
+    update: auto
+    notes: ""
+
+  - id: de-geschgehg
+    title: "Gesetz zum Schutz von Geschäftsgeheimnissen (GeschGehG)"
+    jurisdiction: DE
+    legal_areas: [intellectual_property]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "geschgehg"}
+    update: auto
+    notes: "§ 2: protection requires 'appropriate secrecy measures' (NDAs, access control)."
+
+  - id: de-kschg
+    title: "Kündigungsschutzgesetz (KSchG)"
+    jurisdiction: DE
+    legal_areas: [employment]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "kschg"}
+    update: auto
+    notes: "§ 23 small-business threshold (more than 10 employees). Escalation Trigger 8 applies before dismissing an employee in Germany."
+
+  - id: de-nachwg
+    title: "Nachweisgesetz (NachwG)"
+    jurisdiction: DE
+    legal_areas: [employment]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "nachwg"}
+    update: auto
+    notes: "Written statement of essential employment terms (implements Directive 2019/1152)."
+
+  - id: de-arbzg
+    title: "Arbeitszeitgesetz (ArbZG)"
+    jurisdiction: DE
+    legal_areas: [employment]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "arbzg"}
+    update: auto
+    notes: "Working-time recording duty (BAG 2022). UNVERIFIED: status of the planned ArbZG reform."
+
+  - id: de-sgb-iv
+    title: "Sozialgesetzbuch Viertes Buch (SGB IV) – Gemeinsame Vorschriften für die Sozialversicherung"
+    jurisdiction: DE
+    legal_areas: [employment]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "sgb_4", sections: ["7-7a"]}
+    update: auto
+    notes: "Relevant parts only: § 7 (employment vs self-employment; Scheinselbständigkeit) and § 7a (status determination procedure). The rest is out of scope."
+
+  - id: de-bsig
+    title: "BSI-Gesetz 2025 (BSIG) – NIS2 implementation"
+    jurisdiction: DE
+    legal_areas: [cybersecurity_product]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "bsig_2025"}
+    update: auto
+    notes: "Gesetz über das BSI und über die Sicherheit in der Informationstechnik von Einrichtungen (from the NIS2UmsuCG). UNVERIFIED: exact entry-into-force date."
+
+  - id: de-prodhaftg
+    title: "Produkthaftungsgesetz (ProdHaftG)"
+    jurisdiction: DE
+    legal_areas: [cybersecurity_product]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "prodhaftg"}
+    update: auto
+    notes: "Current gii text implements the old Directive 85/374/EEC. UNVERIFIED: whether the new ProdHaftG implementing Directive 2024/2853 (deadline 2026-12-09) has been enacted. Watch for a new slug or a full replacement."
+
+  - id: de-dadg
+    title: "Gesetz zur Anwendung und Durchsetzung der Datenverordnung (Data-Act-Durchführungsgesetz, DADG)"
+    jurisdiction: DE
+    legal_areas: [data_protection, contracts]
+    tier: 1
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: gii
+    ref: {slug: "dadg"}
+    update: auto
+    notes: "German enforcement law for the Data Act (competent authority, fines). UNVERIFIED: entry-into-force date."
+
+  # ======================================================================
+  # Germany, Tier 2: official guidance
+  # ======================================================================
+
+  - id: de-dsk-oh-digital-services
+    title: "DSK Orientierungshilfe für Anbieter:innen von digitalen Diensten (OH Digitale Dienste)"
+    jurisdiction: DE
+    legal_areas: [data_protection, platform_law]
+    tier: 2
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.datenschutzkonferenz-online.de/media/oh/OH_Digitale_Dienste.pdf"}
+    update: review
+    notes: "Cookies, consent banners and tracking under the TDDDG and GDPR. UNVERIFIED: whether this file is the latest version (an older 'OH Telemedien 2021' version exists). The DSK index of guidance is at datenschutzkonferenz-online.de/orientierungshilfen.html."
+
+  - id: de-dsk-oh-ai
+    title: "DSK Orientierungshilfe Künstliche Intelligenz und Datenschutz (Mai 2024)"
+    jurisdiction: DE
+    legal_areas: [data_protection, ai_regulation]
+    tier: 2
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.datenschutzkonferenz-online.de/media/oh/20240506_DSK_Orientierungshilfe_KI_und_Datenschutz.pdf"}
+    update: review
+    notes: ""
+
+  - id: de-dsk-dpia-list
+    title: "DSK Liste der Verarbeitungstätigkeiten, für die eine DSFA durchzuführen ist (DSFA-Muss-Liste, Version 1.1)"
+    jurisdiction: DE
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.datenschutzkonferenz-online.de/media/ah/20181017_ah_DSK_DSFA_Muss-Liste_Version_1.1_Deutsch.pdf"}
+    update: review
+    notes: "Art. 35(4) GDPR list for the non-public sector."
+
+  - id: de-bnetza-ai-faq
+    title: "Bundesnetzagentur – FAQ zur KI-Verordnung (KI-Service Desk)"
+    jurisdiction: DE
+    legal_areas: [ai_regulation]
+    tier: 2
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.bundesnetzagentur.de/DE/Fachthemen/Digitales/KI/_faq/start_faq.html"}
+    update: review
+    notes: "The Bundesnetzagentur is the German AI Act market surveillance authority under KI-MIG. It also runs the KI-Compliance-Kompass (non-binding)."
+
+  - id: de-bsi-nis2
+    title: "BSI – NIS-2-regulierte Unternehmen (applicability check and registration)"
+    jurisdiction: DE
+    legal_areas: [cybersecurity_product]
+    tier: 2
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/NIS-2-regulierte-Unternehmen/nis-2-regulierte-unternehmen_node.html"}
+    update: review
+    notes: ""
+
+  - id: de-drv-status-determination
+    title: "Deutsche Rentenversicherung – Statusfeststellungsverfahren (Clearingstelle)"
+    jurisdiction: DE
+    legal_areas: [employment]
+    tier: 2
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.deutsche-rentenversicherung.de/DRV/DE/Rente/Arbeitnehmer-und-Selbststaendige/03_Selbststaendige/statusfeststellungsverfahren.html"}
+    update: review
+    notes: "Freelancer misclassification (Scheinselbständigkeit). A companion page on Scheinselbständigkeit is in the same section."
+
+  - id: de-dpma-trademarks
+    title: "DPMA – Marken (trademark registration in Germany)"
+    jurisdiction: DE
+    legal_areas: [intellectual_property]
+    tier: 2
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.dpma.de/marken/index.html"}
+    update: review
+    notes: ""
+
+  # ======================================================================
+  # US, Tier 1: primary law (federal and state)
+  # ======================================================================
+
+  - id: us-ftc-act-s5
+    title: "FTC Act § 5 – Unfair or deceptive acts or practices (15 U.S.C. § 45)"
+    jurisdiction: US
+    legal_areas: [platform_law, ai_regulation, data_protection]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: uscode
+    ref: {title: 15, sections: ["45"]}
+    update: auto
+    notes: "Basis for FTC action on AI claims ('AI washing'), privacy promises and dark patterns."
+
+  - id: us-coppa-statute
+    title: "Children's Online Privacy Protection Act (COPPA), 15 U.S.C. §§ 6501-6506"
+    jurisdiction: US
+    legal_areas: [data_protection]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: uscode
+    ref: {title: 15, sections: ["6501-6506"]}
+    update: auto
+    notes: ""
+
+  - id: us-coppa-rule
+    title: "COPPA Rule, 16 CFR Part 312"
+    jurisdiction: US
+    legal_areas: [data_protection]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from:
+      - {date: 2025-06-23, what: "Effective date of the 2025 amendments (90 FR 16918, FR doc 2025-05904)"}
+      - {date: 2026-04-22, what: "Compliance date for most 2025 amendments"}
+    adapter: ecfr
+    ref: {title: 16, part: 312}
+    update: auto
+    notes: "UNVERIFIED: the 2025-06-23 effective date (the final rule was published 2025-04-22)."
+
+  - id: us-can-spam-statute
+    title: "CAN-SPAM Act, 15 U.S.C. §§ 7701-7713"
+    jurisdiction: US
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: uscode
+    ref: {title: 15, sections: ["7701-7713"]}
+    update: auto
+    notes: ""
+
+  - id: us-can-spam-rule
+    title: "CAN-SPAM Rule, 16 CFR Part 316"
+    jurisdiction: US
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ecfr
+    ref: {title: 16, part: 316}
+    update: auto
+    notes: ""
+
+  - id: us-rosca
+    title: "Restore Online Shoppers' Confidence Act (ROSCA), 15 U.S.C. §§ 8401-8405"
+    jurisdiction: US
+    legal_areas: [platform_law, contracts]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: uscode
+    ref: {title: 15, sections: ["8401-8405"]}
+    update: auto
+    notes: "Online subscriptions and negative-option billing. The FTC's 2024 'click-to-cancel' amendments to 16 CFR 425 were vacated by the 8th Circuit in 2025, so ROSCA is the federal baseline. UNVERIFIED: whether the FTC restarted that rulemaking."
+
+  - id: us-section-230
+    title: "Communications Decency Act § 230, 47 U.S.C. § 230"
+    jurisdiction: US
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: uscode
+    ref: {title: 47, sections: ["230"]}
+    update: auto
+    notes: "Open question: whether § 230 covers output of a company's own generative AI. Treat as unsettled."
+
+  - id: us-dmca-512
+    title: "DMCA safe harbors, 17 U.S.C. § 512"
+    jurisdiction: US
+    legal_areas: [platform_law, intellectual_property]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: uscode
+    ref: {title: 17, sections: ["512"]}
+    update: auto
+    notes: ""
+
+  - id: us-dmca-agent-rule
+    title: "Designation of agent to receive notification of claimed infringement, 37 CFR § 201.38"
+    jurisdiction: US
+    legal_areas: [platform_law, intellectual_property]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ecfr
+    ref: {title: 37, part: 201, sections: ["201.38"]}
+    update: auto
+    notes: "Practical step: register a DMCA agent in the Copyright Office online directory (copyright.gov/dmca-directory)."
+
+  - id: us-copyright-act-core
+    title: "Copyright Act – subject matter, exclusive rights, fair use and ownership (17 U.S.C. §§ 101, 102, 106, 107, 201, 204)"
+    jurisdiction: US
+    legal_areas: [intellectual_property, ai_regulation]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: uscode
+    ref: {title: 17, sections: ["101", "102", "106", "107", "201", "204"]}
+    update: auto
+    notes: "§ 102 (human authorship, relevant to AI outputs), § 107 (fair use, relevant to training), § 201(b) (works made for hire), § 204 (written transfer, relevant to IP assignment). § 105 (US government works) is not included: it seemed irrelevant, so confirm the brief's intent."
+
+  - id: us-ada-title-iii
+    title: "Americans with Disabilities Act Title III – Public accommodations, 42 U.S.C. §§ 12181-12189"
+    jurisdiction: US
+    legal_areas: [platform_law]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: uscode
+    ref: {title: 42, sections: ["12181-12189"]}
+    update: auto
+    notes: "Website accessibility. No federal web regulation for private businesses, so this rests on courts and DOJ guidance (us-doj-ada-web-guidance)."
+
+  - id: us-reg-d
+    title: "Regulation D – Rules governing limited offers and sales without registration, 17 CFR §§ 230.500-230.508"
+    jurisdiction: US
+    legal_areas: [fundraising]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ecfr
+    ref: {title: 17, part: 230, sections: ["230.500-230.508"]}
+    update: auto
+    notes: "SAFEs and priced rounds into a Delaware C-Corp usually rely on Rule 506(b) and a Form D filing."
+
+  - id: us-ca-ccpa
+    title: "California Consumer Privacy Act as amended by the CPRA, Cal. Civ. Code §§ 1798.100-1798.199.100"
+    jurisdiction: US
+    legal_areas: [data_protection, ai_regulation]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CIV&division=3.&title=1.81.5.&part=4.&chapter=&article="}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): leginfo.legislature.ca.gov returns HTTP 403 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. UNVERIFIED: URL. leginfo.legislature.ca.gov returns HTTP 403 to scripted clients, so the adapter needs a browser-like fetch or another source."
+
+  - id: us-ca-cppa-regulations
+    title: "CPPA regulations, Cal. Code Regs. tit. 11, § 7000 ff. (incl. ADMT, risk assessments and cybersecurity audits)"
+    jurisdiction: US
+    legal_areas: [data_protection, ai_regulation]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from:
+      - {date: 2026-01-01, what: "Effective date of the ADMT, risk-assessment and cybersecurity-audit regulations (OAL approval 2025-09-22)"}
+      - {date: 2027-01-01, what: "ADMT requirements compliance date"}
+      - {date: 2028-04-01, what: "First risk-assessment attestations due; cybersecurity-audit certification for the largest businesses (smaller businesses 2029-04-01 and 2030-04-01)"}
+    adapter: web_pinned
+    ref: {url: "https://cppa.ca.gov/regulations/"}
+    update: review
+    notes: "Ingest the consolidated regulation text linked from this page."
+
+  - id: us-ca-caloppa
+    title: "California Online Privacy Protection Act (CalOPPA), Cal. Bus. & Prof. Code §§ 22575-22579"
+    jurisdiction: US
+    legal_areas: [data_protection]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=BPC&division=8.&title=&part=&chapter=22.&article="}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): leginfo.legislature.ca.gov returns HTTP 403 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. Privacy-policy duty for any commercial website collecting PII from California residents. UNVERIFIED: URL (leginfo returns 403 to scripts)."
+
+  - id: us-ca-auto-renewal
+    title: "California Automatic Renewal Law, Cal. Bus. & Prof. Code §§ 17600-17606"
+    jurisdiction: US
+    legal_areas: [platform_law, contracts]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=BPC&division=7.&title=&part=3.&chapter=1.&article=9."}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): leginfo.legislature.ca.gov returns HTTP 403 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. Amended by AB 2863 (2024), effective 2025-07-01. UNVERIFIED: URL and the amendment details."
+
+  - id: us-ca-bot-disclosure
+    title: "California Bot Disclosure Law (SB 1001), Cal. Bus. & Prof. Code §§ 17940-17943"
+    jurisdiction: US
+    legal_areas: [ai_regulation, platform_law]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=BPC&division=7.&title=&part=3.&chapter=6.&article="}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): leginfo.legislature.ca.gov returns HTTP 403 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. UNVERIFIED: URL (leginfo returns 403 to scripts)."
+
+  - id: us-ca-sb53
+    title: "California SB 53 (2025) – Transparency in Frontier Artificial Intelligence Act (TFAIA)"
+    jurisdiction: US
+    legal_areas: [ai_regulation]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: [{date: 2026-01-01, what: "Effective (some provisions from 2027-01-01)"}]
+    adapter: web_pinned
+    ref: {url: "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260SB53"}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): leginfo.legislature.ca.gov returns HTTP 403 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. Signed 2025-09-29. Applies to frontier developers, with extra duties for those with more than $500M revenue. Most founders fall below this. UNVERIFIED: codified section (reportedly Bus. & Prof. Code § 22757.10 ff.) and which provisions start 2027-01-01."
+
+  - id: us-ca-ab2013
+    title: "California AB 2013 (2024) – Generative AI Training Data Transparency"
+    jurisdiction: US
+    legal_areas: [ai_regulation, intellectual_property]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: [{date: 2026-01-01, what: "Training-data documentation must be posted for generative AI systems released since 2022-01-01"}]
+    adapter: web_pinned
+    ref: {url: "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240AB2013"}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): leginfo.legislature.ca.gov returns HTTP 403 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. UNVERIFIED: codified section (reportedly Cal. Civ. Code §§ 3110-3111)."
+
+  - id: us-ca-sb942
+    title: "California SB 942 (2024) – California AI Transparency Act, as amended by AB 853 (2025)"
+    jurisdiction: US
+    legal_areas: [ai_regulation]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from:
+      - {date: 2026-08-02, what: "Operative (delayed from 2026-01-01 by AB 853). AI detection tool and latent and manifest disclosures for covered GenAI providers"}
+      - {date: 2027-01-01, what: "Provenance duties for large online platforms (AB 853)"}
+      - {date: 2028-01-01, what: "Duties for capture-device manufacturers (AB 853)"}
+    adapter: web_pinned
+    ref: {url: "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB942"}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): leginfo.legislature.ca.gov returns HTTP 403 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. AB 853 is at bill_id=202520260AB853. UNVERIFIED: codified section (reportedly Bus. & Prof. Code § 22757 ff.)."
+
+  - id: us-de-dgcl
+    title: "Delaware General Corporation Law (8 Del. C. ch. 1)"
+    jurisdiction: US
+    legal_areas: [company_formation, fundraising]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://delcode.delaware.gov/title8/c001/index.html"}
+    update: review
+    notes: "Relevant parts only (Delaware flip and SAFEs): §§ 101-103 (formation), 141-145 (board, officers, indemnification), 151-153 and 157 (stock, options), 202 (transfer restrictions), 228 (written consent), 242 (charter amendments), 251 and 265-266 (merger and conversion). The rest is out of scope. Corporate law only; franchise tax and other tax matters are out of scope."
+
+  - id: us-co-sb26-189
+    title: "Colorado SB 26-189 – Automated Decision-Making Technology (repeals and re-enacts the Colorado AI Act)"
+    jurisdiction: US
+    legal_areas: [ai_regulation]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: [{date: 2027-01-01, what: "Developer documentation, deployer notice, adverse-outcome disclosure, and human-review rights for ADMT in consequential decisions"}]
+    adapter: web_pinned
+    ref: {url: "https://leg.colorado.gov/bills/sb26-189"}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): leg.colorado.gov returns HTTP 406 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. Signed 2026-05-14. Enforced by the AG under the Colorado Consumer Protection Act, with a 60-day cure period until 2030. Ingest the signed-act PDF linked on the page. The page returns 406 without an 'Accept: text/html' header. UNVERIFIED: C.R.S. section numbers."
+
+  - id: us-co-sb24-205
+    title: "Colorado SB 24-205 – Colorado AI Act (consumer protections for interactions with AI systems)"
+    jurisdiction: US
+    legal_areas: [ai_regulation]
+    tier: 1
+    languages: [en]
+    legal_status: repealed
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://leg.colorado.gov/bills/sb24-205"}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): leg.colorado.gov returns HTTP 406 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. Repealed and re-enacted by SB 26-189. Kept so the guide can answer 'does the Colorado AI Act still apply?'. Enforcement was enjoined by a federal court in 2026 (secondary sources). UNVERIFIED: the exact date the repeal takes effect."
+
+  - id: us-tx-traiga
+    title: "Texas Responsible Artificial Intelligence Governance Act (TRAIGA, HB 149, 89th Leg.), Tex. Bus. & Com. Code ch. 551 ff."
+    jurisdiction: US
+    legal_areas: [ai_regulation]
+    tier: 1
+    languages: [en]
+    legal_status: in_force
+    applies_from: [{date: 2026-01-01, what: "Effective"}]
+    adapter: web_pinned
+    ref: {url: "https://statutes.capitol.texas.gov/Docs/BC/htm/BC.551.htm"}
+    update: review
+    notes: "Enrolled bill text: https://capitol.texas.gov/tlodocs/89R/billtext/html/HB00149F.HTM. AG enforcement, regulatory sandbox, and a NIST AI RMF-based defence. UNVERIFIED: whether the statute also spans chapters 552-554 (only ch. 551 was checked)."
+
+  # ======================================================================
+  # US, Tier 2: official guidance
+  # ======================================================================
+
+  - id: us-ftc-coppa-faq
+    title: "FTC – Complying with COPPA: Frequently Asked Questions"
+    jurisdiction: US
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ftc.gov/business-guidance/resources/complying-coppa-frequently-asked-questions"}
+    update: review
+    notes: "Notes the 2025 amendment. ftc.gov returns 404 to curl even on its homepage (bot filtering), so the adapter needs a browser-like fetch. Verified via WebFetch."
+
+  - id: us-ftc-can-spam-guide
+    title: "FTC – CAN-SPAM Act: A Compliance Guide for Business"
+    jurisdiction: US
+    legal_areas: [platform_law]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business"}
+    update: review
+    notes: "Verified via search index (ftc.gov blocks scripted fetches)."
+
+  - id: us-copyright-office-ai-part1
+    title: "US Copyright Office – Copyright and Artificial Intelligence, Part 1: Digital Replicas (2024)"
+    jurisdiction: US
+    legal_areas: [ai_regulation, intellectual_property]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-1-Digital-Replicas-Report.pdf"}
+    update: review
+    notes: ""
+
+  - id: us-copyright-office-ai-part2
+    title: "US Copyright Office – Copyright and Artificial Intelligence, Part 2: Copyrightability (2025)"
+    jurisdiction: US
+    legal_areas: [ai_regulation, intellectual_property]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf"}
+    update: review
+    notes: ""
+
+  - id: us-copyright-office-ai-part3
+    title: "US Copyright Office – Copyright and Artificial Intelligence, Part 3: Generative AI Training (pre-publication version, 2025)"
+    jurisdiction: US
+    legal_areas: [ai_regulation, intellectual_property]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-3-Generative-AI-Training-Report-Pre-Publication-Version.pdf"}
+    update: review
+    notes: "Pre-publication version. UNVERIFIED: whether a final version has been published (check copyright.gov/ai/)."
+
+  - id: us-nist-ai-rmf
+    title: "NIST AI Risk Management Framework 1.0 (NIST AI 100-1)"
+    jurisdiction: US
+    legal_areas: [ai_regulation]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf"}
+    update: review
+    notes: "Voluntary. Referenced as a compliance defence by Texas TRAIGA."
+
+  - id: us-doj-ada-web-guidance
+    title: "DOJ – Guidance on Web Accessibility and the ADA"
+    jurisdiction: US
+    legal_areas: [platform_law]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ada.gov/resources/web-guidance/"}
+    update: review
+    notes: ""
+
+  - id: us-dpf-program
+    title: "US Department of Commerce – Data Privacy Framework program (participant list and principles)"
+    jurisdiction: US
+    legal_areas: [data_protection]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.dataprivacyframework.gov/"}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): page is rendered by JavaScript; no text without a browser; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. Use to check whether a US vendor is DPF-certified (see eu-dpf-adequacy)."
+
+  - id: us-sec-rule-506b
+    title: "SEC – Private placements: Rule 506(b) (small business guidance)"
+    jurisdiction: US
+    legal_areas: [fundraising]
+    tier: 2
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.sec.gov/resources-small-businesses/exempt-offerings/private-placements-rule-506b"}
+    update: review
+    notes: "sec.gov requires a declared User-Agent with contact info (returns 403 otherwise)."
+
+  # ======================================================================
+  # Tier 3: curated practical sources (public-sector or openly reusable only, ADR 0006)
+  # ======================================================================
+
+  # --- EU ---
+  - id: eu-youreurope-gdpr
+    title: "Your Europe Business – Data protection under the GDPR"
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 3
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://europa.eu/youreurope/business/governance-and-sustainability/digital-and-data-compliance/data-protection-gdpr/index_en.htm"}
+    update: review
+    notes: "European Commission portal. EU content reuse policy (Decision 2011/833/EU) allows reuse."
+
+  - id: eu-cnil-gdpr-developers
+    title: "CNIL – GDPR Developer's Guide"
+    jurisdiction: EU
+    legal_areas: [data_protection]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.cnil.fr/en/gdpr-developers-guide"}
+    update: review
+    notes: "French DPA, so not EU or DE law. Filed under EU as practical GDPR guidance. CNIL content is reportedly under the Licence Ouverte (UNVERIFIED for this page)."
+
+  - id: eu-cnil-ai-recommendations
+    title: "CNIL – AI system development: recommendations to comply with the GDPR"
+    jurisdiction: EU
+    legal_areas: [ai_regulation, data_protection]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.cnil.fr/en/ai-system-development-cnils-recommendations-to-comply-gdpr"}
+    update: review
+    notes: "Practical how-to sheets for training-data GDPR compliance. Same jurisdiction and licence caveats as eu-cnil-gdpr-developers."
+
+  - id: eu-ai-act-service-desk-art50
+    title: "AI Act Service Desk – Article 50 explainer (transparency obligations)"
+    jurisdiction: EU
+    legal_areas: [ai_regulation]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: ec_digital
+    ref: {url: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50"}
+    update: review
+    notes: "Commission-run practical explainer. The Service Desk also hosts the guidelines PDFs."
+
+  - id: eu-youreurope-consumer-contracts
+    title: "Your Europe Business – Consumer contracts and guarantees"
+    jurisdiction: EU
+    legal_areas: [platform_law, contracts]
+    tier: 3
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://europa.eu/youreurope/business/selling-in-eu/consumer-contracts-guarantees/consumer-contracts/index_en.htm"}
+    update: review
+    notes: ""
+
+  - id: eu-youreurope-ip
+    title: "Your Europe Business – Protecting intellectual property"
+    jurisdiction: EU
+    legal_areas: [intellectual_property]
+    tier: 3
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://europa.eu/youreurope/business/growing/protecting-intellectual-property/index_en.htm"}
+    update: review
+    notes: ""
+
+  - id: eu-euipo-ideas-powered
+    title: "EUIPO – Ideas Powered for Business (SME IP guidance)"
+    jurisdiction: EU
+    legal_areas: [intellectual_property]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.euipo.europa.eu/en/discover/ideas-powered-for-business"}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): euipo.europa.eu returns HTTP 403 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot."
+
+  - id: eu-joinup-licensing-assistant
+    title: "Interoperable Europe – Licensing Assistant (open-source licence comparison)"
+    jurisdiction: EU
+    legal_areas: [intellectual_property]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://interoperable-europe.ec.europa.eu/collection/eupl/solution/licensing-assistant"}
+    update: review
+    notes: "Open-source licence compatibility (EUPL, GPL, MIT, Apache and others)."
+
+  - id: eu-youreurope-starting-business
+    title: "Your Europe Business – Starting a business"
+    jurisdiction: EU
+    legal_areas: [company_formation]
+    tier: 3
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://europa.eu/youreurope/business/lifecycle/starting/index_en.htm"}
+    update: review
+    notes: ""
+
+  - id: eu-youreurope-employer-registration
+    title: "Your Europe Business – Registering as an employer and registering employees in another EU country"
+    jurisdiction: EU
+    legal_areas: [employment]
+    tier: 3
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://europa.eu/youreurope/business/hiring-managing-staff/social-security-health/registering-employer/index_en.htm"}
+    update: review
+    notes: "Remote hires in other EU countries (Reg. 883/2004 in practice). Found via search index, not fetched."
+
+  - id: eu-youreurope-access-finance
+    title: "Your Europe Business – Access to finance (EU loans and venture capital)"
+    jurisdiction: EU
+    legal_areas: [fundraising]
+    tier: 3
+    languages: [en, de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://youreurope.europa.eu/business/finance-funding/getting-funding/access-finance/en"}
+    update: review
+    notes: "Thin on legal content. EU-level fundraising law is limited; most of it is national (DE: GmbHG)."
+
+  - id: eu-enisa-sme-guide
+    title: "ENISA – Cybersecurity guide for SMEs"
+    jurisdiction: EU
+    legal_areas: [cybersecurity_product]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.enisa.europa.eu/publications/cybersecurity-guide-for-smes"}
+    update: review
+    notes: ""
+
+  # --- Germany ---
+  - id: de-gp-gmbh
+    title: "Gründerplattform – GmbH gründen"
+    jurisdiction: DE
+    legal_areas: [company_formation]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/rechtsformen/gmbh-gruenden"}
+    update: review
+    notes: "gruenderplattform.de (BMWE/KfW) robots.txt allows crawling. UNVERIFIED: content licence or reuse terms."
+
+  - id: de-gp-ug
+    title: "Gründerplattform – UG (haftungsbeschränkt) gründen"
+    jurisdiction: DE
+    legal_areas: [company_formation]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/rechtsformen/ug-gruenden"}
+    update: review
+    notes: ""
+
+  - id: de-gp-shareholder-agreement
+    title: "Gründerplattform – Gesellschaftsvertrag"
+    jurisdiction: DE
+    legal_areas: [company_formation, fundraising]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/unternehmen-gruenden/gesellschaftsvertrag"}
+    update: review
+    notes: ""
+
+  - id: de-egp-legal-forms
+    title: "Existenzgründungsportal des BMWE – Rechtsformen"
+    jurisdiction: DE
+    legal_areas: [company_formation]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.existenzgruendungsportal.de/Redaktion/DE/Gruendungswissen/Rechtsformen/Rechtsformen"}
+    update: review
+    notes: "existenzgruender.de redirects to existenzgruendungsportal.de. robots.txt sets Crawl-delay 30."
+
+  - id: de-gp-terms
+    title: "Gründerplattform – AGB erstellen"
+    jurisdiction: DE
+    legal_areas: [contracts]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/unternehmen-gruenden/agb-erstellen"}
+    update: review
+    notes: ""
+
+  - id: de-egp-imprint
+    title: "Existenzgründungsportal – Infopool: Impressum bei mehreren Webseiten"
+    jurisdiction: DE
+    legal_areas: [platform_law]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.existenzgruendungsportal.de/Redaktion/DE/BMWK-Infopool/Antworten/E-Business/Recht-AGB/unternehmen-mehrere-webseiten-impressum"}
+    update: review
+    notes: ""
+
+  - id: de-ihk-muc-data-protection
+    title: "IHK München und Oberbayern – Ratgeber Datenschutz"
+    jurisdiction: DE
+    legal_areas: [data_protection]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ihk-muenchen.de/ratgeber/recht/datenschutz/"}
+    update: review
+    notes: "UNVERIFIED: reuse terms."
+
+  - id: de-egp-online-shop-legal
+    title: "Existenzgründungsportal – Infopool: Online-Shop – AGB, Datenschutzerklärung, Widerrufsbelehrung, Impressum"
+    jurisdiction: DE
+    legal_areas: [data_protection, platform_law, contracts]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.existenzgruendungsportal.de/Redaktion/DE/BMWK-Infopool/Antworten/E-Business/Recht-AGB/Online-Shop-AGB-Datenschutzerklaerung-Widerrufserklaerung-Impressum"}
+    update: review
+    notes: "Taken from the sitemap, not fetched individually."
+
+  - id: de-ihk-muc-imprint
+    title: "IHK München und Oberbayern – Merkblatt Pflichtangaben im Internet-Impressum (Stand 05/2024, DDG)"
+    jurisdiction: DE
+    legal_areas: [platform_law]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ihk-muenchen.de/ihk/Merkbl%C3%A4tter-WettbewerbsR/Pflichtangaben-Internetimpressum_Stand05_2024.pdf"}
+    update: review
+    notes: "IHKs are public-law bodies. UNVERIFIED: reuse terms."
+
+  - id: de-ihk-muc-ai-act
+    title: "IHK München und Oberbayern – AI Act: Regeln für Unternehmen beim Einsatz künstlicher Intelligenz"
+    jurisdiction: DE
+    legal_areas: [ai_regulation]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ihk-muenchen.de/ratgeber/digitalisierung/kuenstliche-intelligenz/ai-act/"}
+    update: review
+    notes: "Check that its dates reflect 2026/1744. Some IHK pages still show pre-Omnibus deadlines."
+
+  - id: de-ihk-ai-act-brochure
+    title: "IHK – Broschüre KI-Verordnung"
+    jurisdiction: DE
+    legal_areas: [ai_regulation]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ihk.de/blueprint/servlet/resource/blob/6798414/78bcef5c9f810bf4941be319ad0d187b/ki-verordnung-broschuere-data.pdf"}
+    update: review
+    notes: "UNVERIFIED: which IHK published it, and its date. It may predate the Digital Omnibus on AI."
+
+  - id: de-gp-trademark
+    title: "Gründerplattform – Markenschutz"
+    jurisdiction: DE
+    legal_areas: [intellectual_property]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/unternehmen-gruenden/markenschutz"}
+    update: review
+    notes: ""
+
+  - id: de-gp-employment-contract
+    title: "Gründerplattform – Arbeitsvertrag"
+    jurisdiction: DE
+    legal_areas: [employment]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/unternehmensfuehrung/arbeitsvertrag"}
+    update: review
+    notes: ""
+
+  - id: de-gp-false-self-employment
+    title: "Gründerplattform – Scheinselbstständigkeit"
+    jurisdiction: DE
+    legal_areas: [employment]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/unternehmen-gruenden/scheinselbststaendigkeit"}
+    update: review
+    notes: ""
+
+  - id: de-bsi-it-grundschutz
+    title: "BSI – IT-Grundschutz"
+    jurisdiction: DE
+    legal_areas: [cybersecurity_product]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/it-grundschutz_node.html"}
+    update: review
+    notes: "An authority, but filed as Tier 3 because it is a practical security baseline rather than guidance on a specific law. Regulatory BSI guidance is de-bsi-nis2 (Tier 2)."
+
+  - id: de-gp-esop-vsop
+    title: "Gründerplattform – ESOP und VSOP"
+    jurisdiction: DE
+    legal_areas: [fundraising]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/startup-gruenden/esop-vsop"}
+    update: review
+    notes: "Tax aspects (§ 19a EStG) are out of scope. Refer to a Steuerberater."
+
+  - id: de-gp-convertible-loan
+    title: "Gründerplattform – Wandeldarlehen"
+    jurisdiction: DE
+    legal_areas: [fundraising]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/finanzierung-und-foerderung/finanzierung-finden/finanzierungsmoeglichkeiten/wandeldarlehen"}
+    update: review
+    notes: ""
+
+  - id: de-gp-term-sheet
+    title: "Gründerplattform – Term Sheet"
+    jurisdiction: DE
+    legal_areas: [fundraising]
+    tier: 3
+    languages: [de]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://gruenderplattform.de/startup-gruenden/term-sheet"}
+    update: review
+    notes: "Escalation Trigger 7 applies before signing financing documents."
+
+  # --- US ---
+  - id: us-ftc-ai-claims-blog
+    title: "FTC Business Blog – Keep your AI claims in check (2023)"
+    jurisdiction: US
+    legal_areas: [ai_regulation, platform_law]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ftc.gov/business-guidance/blog/2023/02/keep-your-ai-claims-check"}
+    update: review
+    notes: "BLOCKED (checked 2026-10-12): ftc.gov returns HTTP 404 to automated requests; the guide does not disguise its client to get around this. Needs another official source or a manual snapshot. US federal works are public domain. UNVERIFIED: URL (ftc.gov blocks scripted fetches, and this post was found only as a citation in an FTC filing)."
+
+  - id: us-ftc-operation-ai-comply
+    title: "FTC – Crackdown on deceptive AI claims and schemes (Operation AI Comply, 2024)"
+    jurisdiction: US
+    legal_areas: [ai_regulation]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ftc.gov/news-events/news/press-releases/2024/09/ftc-announces-crackdown-deceptive-ai-claims-schemes"}
+    update: review
+    notes: "Enforcement examples. Verified via search index."
+
+  - id: us-ftc-advertising-basics
+    title: "FTC – Advertising and Marketing Basics"
+    jurisdiction: US
+    legal_areas: [platform_law]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ftc.gov/business-guidance/advertising-marketing/advertising-marketing-basics"}
+    update: review
+    notes: "Verified via search index."
+
+  - id: us-ftc-protecting-personal-info
+    title: "FTC – Protecting Personal Information: A Guide for Business"
+    jurisdiction: US
+    legal_areas: [data_protection, cybersecurity_product]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ftc.gov/business-guidance/resources/protecting-personal-information-guide-business"}
+    update: review
+    notes: "Verified via search index (ftc.gov blocks scripted fetches)."
+
+  - id: us-sba-business-structure
+    title: "SBA – Launch your business: choose a business structure"
+    jurisdiction: US
+    legal_areas: [company_formation]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.sba.gov/business-guide/launch-your-business/choose-business-structure"}
+    update: review
+    notes: "Now redirects to sba.gov/counseling/launch-your-business/#business-structure. Pin the redirect target."
+
+  - id: us-sba-fund-business
+    title: "SBA – Fund your business"
+    jurisdiction: US
+    legal_areas: [fundraising]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.sba.gov/business-guide/plan-your-business/fund-your-business"}
+    update: review
+    notes: "Now redirects to sba.gov/counseling/plan-your-business/#fund-business."
+
+  - id: us-yc-safe
+    title: "Y Combinator – Post-money SAFE documents and user guide"
+    jurisdiction: US
+    legal_areas: [fundraising]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://www.ycombinator.com/documents"}
+    update: review
+    notes: "Redirects to ycombinator.com/safe. YC publishes the SAFE forms for free use. UNVERIFIED: explicit licence for the explanatory text."
+
+  - id: us-choosealicense
+    title: "choosealicense.com – Open-source licence overview"
+    jurisdiction: US
+    legal_areas: [intellectual_property]
+    tier: 3
+    languages: [en]
+    legal_status: in_force
+    applies_from: []
+    adapter: web_pinned
+    ref: {url: "https://choosealicense.com/licenses/"}
+    update: review
+    notes: "Jurisdiction-neutral, filed under US. Run by GitHub with content under CC BY 3.0 (UNVERIFIED: current licence)."
+
+legal_areas:
+  company_formation: "Company Formation & Governance"
+  contracts: "Contracts & Terms"
+  data_protection: "Data Protection"
+  ai_regulation: "AI Regulation"
+  platform_law: "Platform & Internet Law"
+  intellectual_property: "Intellectual Property"
+  employment: "Employment & Contractors"
+  cybersecurity_product: "Cybersecurity & Product Rules"
+  fundraising: "Fundraising & Equity"

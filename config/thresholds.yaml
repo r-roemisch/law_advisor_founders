@@ -1,0 +1,27 @@
+# Numeric thresholds used by the applicability checker tool.
+#
+# Not legal advice: the Founder Legal Guide provides general legal information only.
+#
+# Every block names the Source (id in sources.yaml) and the provision it comes from, and the date the
+# figure was last checked against the official text. When a threshold changes (e.g. the CCPA's
+# inflation adjustment every odd year), update the figure and `checked`.
+
+sme:
+  source: eu-sme-recommendation
+  reference: "Commission Recommendation 2003/361/EC, Annex, Art. 2"
+  checked: 2026-10-12
+  # An enterprise is in a category if headcount is below the limit AND turnover OR balance sheet
+  # total is at or below the ceiling. Partner and linked enterprises count too (Annex, Art. 6).
+  micro: {headcount_below: 10, turnover_max_eur: 2000000, balance_sheet_max_eur: 2000000}
+  small: {headcount_below: 50, turnover_max_eur: 10000000, balance_sheet_max_eur: 10000000}
+  medium: {headcount_below: 250, turnover_max_eur: 50000000, balance_sheet_max_eur: 43000000}
+
+ccpa:
+  source: us-ca-ccpa
+  reference: "Cal. Civ. Code § 1798.140(d)(1)"
+  checked: 2026-10-12
+  # CPI-adjusted by the CPPA on 2025-01-01 (from $25,000,000); next adjustment due 2027-01-01.
+  # https://www.cppa.ca.gov/regulations/cpi_adjustment.html
+  annual_gross_revenue_usd: 26625000
+  consumers_or_households: 100000
+  revenue_share_from_selling_or_sharing: 0.5
