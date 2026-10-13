@@ -19,7 +19,7 @@
 #   - cybersecurity_product x US  Not listed in US coverage (e.g. state breach-notification laws, CA IoT law).
 #   - employment x US                US employment law is out of scope (docs/SCOPE.md).
 #   - "Other states" comprehensive privacy laws: summary table only, written by the project from the states'
-#     official sources (NCSL dropped under ADR 0006). Not yet a Source; see docs/PLAN.md days 7-8.
+#     official sources (NCSL dropped under ADR 0006). Not yet a Source; see docs/archive/PLAN.md days 7-8.
 
 cells:
 

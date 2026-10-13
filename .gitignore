@@ -11,3 +11,4 @@ out/
 data/
 soft_requirements.txt
 hard_requirements.txt
+last_session*

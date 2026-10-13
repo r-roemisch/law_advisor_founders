@@ -4,7 +4,7 @@
 
 Two weeks at about 6 hours a day. The hard requirements are complete by day 6. Everything after that is extra, ordered so that cutting from the end loses the least.
 
-Terms are defined in [`CONTEXT.md`](../CONTEXT.md), scope in [`SCOPE.md`](./SCOPE.md), and the reasons for big decisions in [`adr/`](./adr/).
+Terms are defined in [`CONTEXT.md`](../../CONTEXT.md), scope in [`SCOPE.md`](../SCOPE.md), and the reasons for big decisions in [`adr/`](../adr/).
 
 ## Status (2026-10-12)
 
